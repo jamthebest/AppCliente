@@ -1,0 +1,13 @@
+C:\Users\JAM$\Downloads\Unitec\Seguridad Computacional\Proyecto\Proyecto\bin\Debug\Proyecto.exe.config
+C:\Users\JAM$\Downloads\Unitec\Seguridad Computacional\Proyecto\Proyecto\bin\Debug\Proyecto.exe
+C:\Users\JAM$\Downloads\Unitec\Seguridad Computacional\Proyecto\Proyecto\bin\Debug\Proyecto.pdb
+C:\Users\JAM$\Downloads\Unitec\Seguridad Computacional\Proyecto\Proyecto\bin\Debug\Proyecto.xml
+C:\Users\JAM$\Downloads\Unitec\Seguridad Computacional\Proyecto\Proyecto\obj\Debug\Proyecto.Chat.resources
+C:\Users\JAM$\Downloads\Unitec\Seguridad Computacional\Proyecto\Proyecto\obj\Debug\Proyecto.Login.resources
+C:\Users\JAM$\Downloads\Unitec\Seguridad Computacional\Proyecto\Proyecto\obj\Debug\Proyecto.Resources.resources
+C:\Users\JAM$\Downloads\Unitec\Seguridad Computacional\Proyecto\Proyecto\obj\Debug\Proyecto.NewUser.resources
+C:\Users\JAM$\Downloads\Unitec\Seguridad Computacional\Proyecto\Proyecto\obj\Debug\Proyecto.VenCliente.resources
+C:\Users\JAM$\Downloads\Unitec\Seguridad Computacional\Proyecto\Proyecto\obj\Debug\Proyecto.vbproj.GenerateResource.Cache
+C:\Users\JAM$\Downloads\Unitec\Seguridad Computacional\Proyecto\Proyecto\obj\Debug\Proyecto.exe
+C:\Users\JAM$\Downloads\Unitec\Seguridad Computacional\Proyecto\Proyecto\obj\Debug\Proyecto.xml
+C:\Users\JAM$\Downloads\Unitec\Seguridad Computacional\Proyecto\Proyecto\obj\Debug\Proyecto.pdb
