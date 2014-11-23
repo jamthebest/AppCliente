@@ -4,6 +4,7 @@ Imports System.Net.Sockets
 Imports System.Threading
 Imports System.Text
 Imports System.IO
+Imports System.Data.SqlClient
 
 Public Class Cliente
 #Region "VARIABLES"
@@ -21,6 +22,7 @@ Public Class Cliente
     Public Event RespuestaLogin(ByVal respuesta As String)
     Public Event RespuestaMensaje(ByVal respuesta As String)
     Public Event RespuestaUsers(ByVal respuesta As ArrayList)
+    Public Event RespuestaObtener(ByVal respuesta As ArrayList)
 #End Region
 
 #Region "PROPIEDADES"
@@ -127,6 +129,8 @@ Public Class Cliente
                     Case 3
                         RaiseEvent RespuestaUsers(solicitud.ArgumentosSolicitud)
                     Case 4
+                        MsgBox(solicitud.MensajeSolicitud)
+                        RaiseEvent RespuestaObtener(solicitud.ArgumentosSolicitud)
                     Case 5
                         RaiseEvent RespuestaMensaje(solicitud.MensajeSolicitud)
                     Case Else

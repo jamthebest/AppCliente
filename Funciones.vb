@@ -90,7 +90,7 @@ Public Class Funciones
         Return ruta + ".xml"
     End Function
 
-    Private Function FileToString(ByVal ruta As String) As String
+    Public Function FileToString(ByVal ruta As String) As String
         SyncLock Me
             Dim objeto As New StreamReader(ruta)
             Dim sLine As String = ""
@@ -243,65 +243,33 @@ Public Class Funciones
         Socket.EnviarDatos(encriptado)
     End Sub
 
-    Function cambioEstado(ByVal Usuario As User, ByVal Estado As Integer) As Boolean
-        Return True
-    End Function
-
-    Function Validar(ByVal Data As Datos, ByVal Socket As Cliente) As Boolean
+    Public Sub Validar(ByVal Data As Datos, ByVal Socket As Cliente)
         Dim datos As New ArrayList()
         datos.Add(Data.nomusuario)
         datos.Add(Data.passusuario)
         solicitud = New Solicitud(1, datos)
         Dim encriptado As String = Encriptar(solicitud, "Solicitud")
         Socket.EnviarDatos(encriptado)
-        Return True
-    End Function
+    End Sub
 
-    Function nuevoCliente(ByVal Data As Datos) As Boolean ', ByVal Socket As Cliente) As Boolean
+    Public Sub nuevoCliente(ByVal Data As Datos, ByVal Socket As Cliente)
         Dim datos As New ArrayList()
         datos.Add(Data.nomusuario)
         datos.Add(Data.passusuario)
         solicitud = New Solicitud(4, datos)
         Dim encriptado As String = Encriptar(solicitud, "Solicitud")
-        Return True
-    End Function
+    End Sub
 
-    Function ObtenerMensajes(ByVal usuario As User, ByVal para As User, ByVal contador As Integer, ByVal Socket As Cliente) As ArrayList
-        Dim dr As SqlClient.SqlDataReader = Nothing
-        Dim mensajes As New ArrayList
-        If dr.HasRows = True Then
-            For Each item As System.Data.Common.DbDataRecord In dr
-                If item.GetString(0).Equals(usuario.User) Then
-                    Dim message As Mensaje
-                    My.Computer.FileSystem.WriteAllText(usuario.User & ".xml", item.GetString(2), False)
-                    message = Me.DesSerializar(Me.FileToString(usuario.User & ".xml"))
-                    If message.Sound.Any Then
-                        BytesToFile(message.Sound, usuario.User, contador)
-                        mensajes.Add("Yo: " & message.Text & " %% Audio.mp3 %%" & "   _" & item.GetString(3))
-                    Else
-                        mensajes.Add("Yo: " & message.Text & "   _" & item.GetString(3))
-                    End If
-                Else
-                    Dim message As Mensaje
-                    My.Computer.FileSystem.WriteAllText(usuario.User & ".xml", item.GetString(2), False)
-                    message = Me.DesSerializar(Me.FileToString(usuario.User & ".xml"))
-                    If message.Sound.Any Then
-                        BytesToFile(message.Sound, usuario.User, contador)
-                        mensajes.Add(para.User & ": " & message.Text & " %% Audio.mp3 %%" & "   _" & item.GetString(3))
-                    Else
-                        mensajes.Add(para.User & ": " & message.Text & "   _" & item.GetString(3))
-                    End If
-                End If
-                If (IO.File.Exists(usuario.User & ".xml")) Then
-                    IO.File.Delete(usuario.User & ".xml")
-                End If
-                contador += 1
-            Next
-            Return mensajes
-        Else
-            Return mensajes
-        End If
-    End Function
+    Public Sub ObtenerMensajes(ByVal usuario As User, ByVal para As User, ByVal Socket As Cliente)
+        Dim parametros As ArrayList = New ArrayList()
+        With parametros
+            .Add(usuario.User)
+            .Add(para.User)
+        End With
+        solicitud = New Solicitud(4, parametros)
+        Dim encriptado As String = Encriptar(solicitud, "Solicitud")
+        Socket.EnviarDatos(encriptado)
+    End Sub
 
     Public Function Encriptar(ByVal objeto As Solicitud, ByVal ruta As String) As String
         Dim txtXML As String = Serializar(objeto, ruta) 'funcion que convierte el mensaje a XML

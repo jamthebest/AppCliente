@@ -11,7 +11,7 @@
             dts.nomusuario = txtUsuario.Text
             dts.passusuario = funcion.MD5Encrypt(txtPassword.Text)
 
-            If funcion.nuevoCliente(dts) = True Then
+            If True Then 'funcion.nuevoCliente(dts) = True Then
                 Dim Principal As New VenCliente
                 Principal.Inicio(New User(txtUsuario.Text), WinSockCliente)
                 Principal.Show()

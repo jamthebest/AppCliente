@@ -1,5 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Solicitud xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <TipoSolicitud>1</TipoSolicitud>
-  <MensajeSolicitud>Exito al hacer login</MensajeSolicitud>
+  <TipoSolicitud>3</TipoSolicitud>
+  <MensajeSolicitud>Usuarios Enviados</MensajeSolicitud>
+  <ArgumentosSolicitud>
+    <anyType xsi:type="xsd:string">Conectados</anyType>
+    <anyType xsi:type="xsd:string">Desconectados</anyType>
+    <anyType xsi:type="xsd:string">jam2</anyType>
+  </ArgumentosSolicitud>
 </Solicitud>

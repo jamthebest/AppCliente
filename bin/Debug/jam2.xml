@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Mensaje xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Text>scjnnsdk</Text>
+  <Text>jknvd</Text>
   <MessageTo>
-    <User>jam2</User>
+    <User>jam</User>
   </MessageTo>
   <MessageFrom>
-    <User>jam</User>
+    <User>jam2</User>
   </MessageFrom>
 </Mensaje>

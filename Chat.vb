@@ -1,12 +1,14 @@
 ﻿Imports System.IO
 Imports System.Text
 Imports System.Security.Cryptography
+Imports System.Data.SqlClient
 
 Public Class Chat
     Private s, m As String 'variables de minutos y segundos
     Private x, minutos As Integer 'variables utilizadas al contabilizar el tiempo
     Private yo As User 'Usuario al que le pertenece el chat
     Private dest As User 'Usuario con el cual se está chateando
+    Dim funciones As New Funciones
     Dim WithEvents WinSockCliente As New Cliente
     Private demo As Threading.Thread = Nothing
     Dim IP1 As String
@@ -44,17 +46,26 @@ Public Class Chat
         'MsgBox("El servidor envio el siguiente mensaje: " & datos)
     End Sub
 
+    Private Sub SetText2(ByVal [text1] As String)
+        ' InvokeRequired required compares the thread ID of the
+        ' calling thread to the thread ID of the creating thread.
+        ' If these threads are different, it returns true.
+        If Me.txtMensaje.InvokeRequired Then
+            Dim d As New SetTextCallback(AddressOf SetText2)
+            Me.Invoke(d, New Object() {[text1]})
+        Else
+            Me.txtHistorial.Items.Add(text1 & vbCrLf)
+        End If
+    End Sub
+
     Private Sub WinSockCliente_ConexionTerminada() Handles WinSockCliente.ConexionTerminada
-        
+
     End Sub
 
     Private Sub btnEnviar_Click(sender As Object, e As EventArgs) Handles btnEnviar.Click
         Dim texto As String = txtMensaje.Text
         Dim txtXML As String
-        Dim funciones As New Funciones
 
-        yo = New User("Jam") 'Se borra
-        Dim xx As User = New User("XX") 'Se borra
         grabado = False
         Dim tDes As String = ""
 
@@ -64,12 +75,12 @@ Public Class Chat
             Dim mensaje As Mensaje 'Se crea la variable para el mensaje nuevo
             If texto.Equals("") Then 'Se envía un mensaje de audio
                 Dim audio As String = funciones.FileToByteArray(yo.User & contador & ".mp3") 'Se convierte el audio a un arreglo de bytes
-                mensaje = New Mensaje("", audio, xx, yo) 'Se crea el mensaje de Solo de sonido
+                mensaje = New Mensaje("", audio, dest, yo) 'Se crea el mensaje de Solo de sonido
             ElseIf Label2.Text.Equals("") Then 'Se envía un mensaje de texto
-                mensaje = New Mensaje(texto, xx, yo) 'Se crea el mensaje de Solo de texto
+                mensaje = New Mensaje(texto, dest, yo) 'Se crea el mensaje de Solo de texto
             Else 'Se envia un mensaje de Audio y Texto
                 Dim audio As String = funciones.FileToByteArray(yo.User & contador & ".mp3") 'Se convierte el audio
-                mensaje = New Mensaje(texto, audio, xx, yo) 'Se crea el mensaje de De texto y audio
+                mensaje = New Mensaje(texto, audio, dest, yo) 'Se crea el mensaje de De texto y audio
             End If
             contador += 1
             txtXML = funciones.Serializar(mensaje, yo.User) 'funcion que convierte el mensaje a XML
@@ -81,7 +92,7 @@ Public Class Chat
             ElseIf Not Label2.Text.Equals("") Then
                 texto &= "  %% Audio.mp3 %%"
             End If
-            texto &= "   _" & DateTime.Now.ToString("dd/MM/yyyy  hh:mm:ss")
+            texto &= "   _" & DateTime.Now.ToString("dd-MM-yyyy  hh:mm:ss")
             txtHistorial.Items.Add("Yo: " + texto + vbCrLf + vbCrLf) 'Se escribe el mensaje en el historial
 
             Dim solicitud As Solicitud = New Solicitud(2, tDes)
@@ -290,5 +301,38 @@ Public Class Chat
                 IO.File.Delete(yo.User & i & ".mp3")
             End If
         Next
+    End Sub
+
+    Private Sub Chat_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        funciones.ObtenerMensajes(yo, dest, WinSockCliente)
+    End Sub
+
+    Public Sub RespuestaObtener(ByVal respuesta As ArrayList) Handles WinSockCliente.RespuestaObtener
+        SyncLock Me
+            Dim origen As String
+            For i = 0 To (respuesta.Count / 3) - 1
+                'If Not item.GetString(0).Equals(yo.User) And Not item.GetString(0).Equals(dest.User) Then
+                'Exit For
+                'End If
+                If respuesta(i * 3).ToString.Equals(yo.User) Then
+                    origen = yo.User
+                Else
+                    origen = dest.User
+                End If
+                Dim message As Mensaje
+                My.Computer.FileSystem.WriteAllText(yo.User & ".xml", respuesta((i * 3) + 2).ToString, False)
+                message = funciones.DesSerializar(funciones.FileToString(yo.User & ".xml"))
+                If message.Sound.Any Then
+                    funciones.BytesToFile(message.Sound, yo.User, contador)
+                    Me.SetText2(origen & ": " & message.Text & " %% Audio.mp3 %%" & "   _" & respuesta((i * 3) + 3).ToString)
+                Else
+                    Me.SetText2(origen & ": " & message.Text & "   _" & respuesta((i * 3) + 3).ToString)
+                End If
+                If (IO.File.Exists(yo.User & ".xml")) Then
+                    IO.File.Delete(yo.User & ".xml")
+                End If
+                contador += 1
+            Next
+        End SyncLock
     End Sub
 End Class
