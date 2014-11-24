@@ -78,13 +78,20 @@ Public Class Cliente
     End Function
 
     Public Sub EnviarDatos(ByVal Datos As String)
-        Dim mensaje As String = Datos
-        While (Encoding.ASCII.GetBytes(mensaje).Length < 1024)
+        Dim mens As String = Datos & "?"
+        Dim mensaje As String = mens
+        While Encoding.ASCII.GetBytes(mens).Length > 1024
+            mens = mens.Substring(0, mens.Length - 1024)
+        End While
+        
+        While (Encoding.ASCII.GetBytes(mens).Length < 1024)
+            mens = mens & "?"
             mensaje = mensaje & "?"
         End While
-        Dim BufferDeEscritura() As Byte = New Byte(1023) {}
-        BufferDeEscritura = Encoding.ASCII.GetBytes(mensaje)
 
+        Dim BufferDeEscritura() As Byte = New Byte(Encoding.ASCII.GetBytes(mensaje).Length) {}
+        BufferDeEscritura = Encoding.ASCII.GetBytes(mensaje)
+        
         If Not (Stm Is Nothing) Then
             'Envio los datos al Servidor
             Stm.Write(BufferDeEscritura, 0, BufferDeEscritura.Length)
@@ -99,14 +106,21 @@ Public Class Cliente
             Try
                 BufferDeLectura = New Byte(1023) {}
                 'Me quedo esperando a que llegue algun mensaje 
-                Stm.Read(BufferDeLectura, 0, BufferDeLectura.Length)
+                Dim men As String = ""
                 'Genero el evento DatosRecibidos, ya que se han recibido datos desde el Servidor 
-                Dim men As String = Encoding.ASCII.GetString(BufferDeLectura)
+                Do
+                    'Me quedo esperando a que llegue algun mensaje 
+                    Stm.Read(BufferDeLectura, 0, BufferDeLectura.Length)
+                    men &= Encoding.ASCII.GetString(BufferDeLectura)
+                Loop While Not men.Last.ToString.Equals("?") 'And men.Length < 300000
+                'MsgBox("Tamaño: " & Encoding.ASCII.GetBytes(men).Length)
+
                 Dim y As String = men.Last
                 Do While y.Equals("?")
                     men = men.Substring(0, men.Length - 1)
                     y = men.Last
                 Loop
+                'MsgBox("Tamaño: " & Encoding.ASCII.GetBytes(men).Length)
                 Dim x As String = funciones.decryptString(men)
                 'Dim md5 As String = x.Substring(x.IndexOf("?XXXJAMXXX?"))
                 x = x.Substring(0, x.IndexOf("?XXXJAMXXX?"))

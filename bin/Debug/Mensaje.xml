@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mensaje xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Text>hola</Text>
+  <Text>Bien Bien</Text>
   <MessageTo>
     <User>jam2</User>
   </MessageTo>

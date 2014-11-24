@@ -141,15 +141,31 @@ Public Class Chat
         Call Resetear()
     End Sub
 
+    Private Sub label2_temp(sender As Object, e As EventArgs) Handles Label2.TextChanged
+        If Label2.Text = "00:10" Then
+            Call TimerOff()
+            Call BotonesDetenido()
+
+            Dim comando As String = "save recsound " & yo.User & contador & ".mp3"
+            mciSendString(comando, "", 0, 0) 'Guarda el audio grabado en un archivo
+            mciSendString("close recsound", "", 0, 0) 'Cierra la instancia que graba el audio
+
+            Label1.Text = "Detenido..."
+
+        ElseIf Label2.Text = "0:0" Then
+            Label2.Text = "00:10"
+            'MsgBox("Audio Grabado", MsgBoxStyle.Information, "Mensaje") 'Emite un mensaje que indica que se grabó el audio
+        End If
+    End Sub
+
     Private Sub cmdDetener_Click(sender As Object, e As EventArgs) Handles cmdDetener.Click
         Call BotonesDetenido()
         Call TimerOff()
 
-        yo = New User("Jam") 'Se borra
         Dim comando As String = "save recsound " & yo.User & contador & ".mp3"
         mciSendString(comando, "", 0, 0) 'Guarda el audio grabado en un archivo
         mciSendString("close recsound", "", 0, 0) 'Cierra la instancia que graba el audio
-        MsgBox("Audio Grabado", MsgBoxStyle.Information, "Mensaje") 'Emite un mensaje que indica que se grabó el audio
+        'MsgBox("Audio Grabado", MsgBoxStyle.Information, "Mensaje") 'Emite un mensaje que indica que se grabó el audio
 
         Label1.Text = "Detenido..."
     End Sub
@@ -310,23 +326,24 @@ Public Class Chat
     Public Sub RespuestaObtener(ByVal respuesta As ArrayList) Handles WinSockCliente.RespuestaObtener
         SyncLock Me
             Dim origen As String
-            For i = 0 To (respuesta.Count / 3) - 1
+            For i = 0 To (respuesta.Count / 4) - 1
                 'If Not item.GetString(0).Equals(yo.User) And Not item.GetString(0).Equals(dest.User) Then
                 'Exit For
                 'End If
-                If respuesta(i * 3).ToString.Equals(yo.User) Then
-                    origen = yo.User
+                If respuesta(i * 4).ToString.Equals(yo.User) Then
+                    origen = "Yo"
                 Else
                     origen = dest.User
                 End If
                 Dim message As Mensaje
-                My.Computer.FileSystem.WriteAllText(yo.User & ".xml", respuesta((i * 3) + 2).ToString, False)
-                message = funciones.DesSerializar(funciones.FileToString(yo.User & ".xml"))
-                If message.Sound.Any Then
+                My.Computer.FileSystem.WriteAllText(yo.User & ".xml", respuesta((i * 4) + 2).ToString, False)
+                message = funciones.DesSerializar(yo.User & ".xml")
+                'message = funciones.DesSerializar(funciones.FileToString(yo.User & ".xml"))
+                If Not message.Sound = Nothing Then
                     funciones.BytesToFile(message.Sound, yo.User, contador)
-                    Me.SetText2(origen & ": " & message.Text & " %% Audio.mp3 %%" & "   _" & respuesta((i * 3) + 3).ToString)
+                    Me.SetText2(origen & ": " & message.Text & " %% Audio.mp3 %%" & "   _" & respuesta((i * 4) + 3).ToString)
                 Else
-                    Me.SetText2(origen & ": " & message.Text & "   _" & respuesta((i * 3) + 3).ToString)
+                    Me.SetText2(origen & ": " & message.Text & "   _" & respuesta((i * 4) + 3).ToString)
                 End If
                 If (IO.File.Exists(yo.User & ".xml")) Then
                     IO.File.Delete(yo.User & ".xml")
