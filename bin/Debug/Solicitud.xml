@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Solicitud xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <TipoSolicitud>4</TipoSolicitud>
-  <ArgumentosSolicitud>
-    <anyType xsi:type="xsd:string">jam</anyType>
-    <anyType xsi:type="xsd:string">jam2</anyType>
-  </ArgumentosSolicitud>
+  <TipoSolicitud>2</TipoSolicitud>
+  <MensajeSolicitud>fp4hcl/qdMfJFNo0whfswV5v6Qvg26Y3kP5KyH+JLwXt6AgX+uOWUCfJxyzgIE3KJz9jgB9T86vXYXlDP0KyQnt3Cub11XGRSlOX7NpTEJxcbTFP09zI99TqAHpwJ/sqIZqr35/IWQzEwa95VTnT5xKt8iEHa6icmfRvZGdGTyFPC+kihQxCxtWBUDR0iKGn8P0wI/hiOzeh9sr00Bg4vDCSbPZpUYKW/64Sf2J1G500X/xXf5IXG8u9cKp413p6XNcaEkhupX6C8U7DodgkyNH/9HvZ363ohxdioigYQ/FDYriFbSged3vrcafPhD9gt9rM60HqOMDOVIzSyHcdQ+lD32q5+CoexocCgoq5SADMsYOpnRCgXCiew7NxklSXzEAfTRPg8EvDXLrMR5l1LvRd1XFbTiqRALVbH6VYvBSJmNr86V0CKh8RwwKPOGvMUEevpT5AERk=</MensajeSolicitud>
 </Solicitud>

@@ -21,13 +21,15 @@ Public Class VenCliente
     End Sub
 
     Private Sub btnChat_Click(sender As Object, e As EventArgs) Handles btnChat.Click
-        Dim seleccionado As String = lstClients.Items.Item(lstClients.SelectedIndex).ToString
-        If seleccionado.Equals("Conectados") Or seleccionado.Equals("Desconectados") Then
-            MsgBox("Seleccione un usuario correcto", MsgBoxStyle.Critical, "Error Chat")
-        Else
-            Dim chat As Chat = New Chat
-            chat.User(New User(yo.User), New User(seleccionado), WinSockCliente)
-            chat.Show()
+        If lstClients.SelectedIndex > 0 Then
+            Dim seleccionado As String = lstClients.Items.Item(lstClients.SelectedIndex).ToString
+            If seleccionado.Equals("Conectados") Or seleccionado.Equals("Desconectados") Then
+                MsgBox("Seleccione un usuario correcto", MsgBoxStyle.Critical, "Error Chat")
+            Else
+                Dim chat As Chat = New Chat
+                chat.User(New User(yo.User), New User(seleccionado), WinSockCliente)
+                chat.Show()
+            End If
         End If
     End Sub
 

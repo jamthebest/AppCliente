@@ -115,21 +115,25 @@ Public Class Cliente
                     Case 1
                         RaiseEvent RespuestaLogin(solicitud.MensajeSolicitud)
                     Case 2
-                        Dim mens As String = funciones.decryptString(solicitud.MensajeSolicitud)
-                        mens = mens.Substring(0, mens.IndexOf("?XXXJAMXXX?"))
-                        Dim mensaje As Mensaje = funciones.DesSerializar(mens)
-                        If mensaje.Text.Equals("") Then
-                            mensaje.Text = "%% Audio.mp3 %%"
-                        ElseIf mensaje.Sound.Any Then
-                            mensaje.Text &= "  %% Audio.mp3 %%"
-                        End If
-                        mensaje.Text &= "   _" & DateTime.Now.ToString("dd/MM/yyyy  hh:mm:ss")
-
-                        RaiseEvent DatosRecibidos(mensaje.Text)
+                        Try
+                            Dim mens As String = funciones.decryptString(solicitud.MensajeSolicitud)
+                            mens = mens.Substring(0, mens.IndexOf("?XXXJAMXXX?"))
+                            Dim mensaje As Mensaje = funciones.DesSerializar(funciones.xmlToFile(mens, "Mensaje"))
+                            mens = mensaje.Text
+                            If mens.Equals("") Then
+                                mens = "%% Audio.mp3 %%"
+                            ElseIf Not mensaje.Sound = Nothing Then
+                                mens &= "  %% Audio.mp3 %%"
+                            End If
+                            mens &= "   _" & DateTime.Now.ToString("dd/MM/yyyy  hh:mm:ss")
+                            
+                            RaiseEvent DatosRecibidos(mens)
+                        Catch e As Exception
+                            MsgBox("Error al Recibir Mensaje: " & e.Message)
+                        End Try
                     Case 3
                         RaiseEvent RespuestaUsers(solicitud.ArgumentosSolicitud)
                     Case 4
-                        MsgBox(solicitud.MensajeSolicitud)
                         RaiseEvent RespuestaObtener(solicitud.ArgumentosSolicitud)
                     Case 5
                         RaiseEvent RespuestaMensaje(solicitud.MensajeSolicitud)

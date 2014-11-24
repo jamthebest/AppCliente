@@ -85,7 +85,7 @@ Public Class Funciones
         End SyncLock
     End Function
 
-    Private Function xmlToFile(ByVal xml As String, ByVal ruta As String) As String
+    Public Function xmlToFile(ByVal xml As String, ByVal ruta As String) As String
         My.Computer.FileSystem.WriteAllText(ruta + ".xml", xml, False)
         Return ruta + ".xml"
     End Function
