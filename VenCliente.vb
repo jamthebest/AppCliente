@@ -5,6 +5,8 @@ Imports System.Windows.Forms
 Imports Proyecto.Chat
 
 Public Class VenCliente
+    Private log As Login
+    Private ventanas As ArrayList = New ArrayList()
     Private yo As User
     Private funcion As New Funciones
     Private hilo As Thread
@@ -14,10 +16,17 @@ Public Class VenCliente
     Dim WithEvents WinSockCliente As New Cliente
     Delegate Sub SetTextCallback(ByVal [text1] As String)
 
-    Public Sub Inicio(ByVal usuario As User, ByVal socket As Cliente)
+    Public Sub Inicio(ByVal usuario As User, ByVal socket As Cliente, ByVal login As Login)
         yo = usuario
         Me.Text &= ": " & usuario.User
         WinSockCliente = socket
+        Me.log = login
+    End Sub
+
+    Public Sub Fin()
+        For Each ventana As Chat In ventanas
+            ventana.Close()
+        Next
     End Sub
 
     Private Sub btnChat_Click(sender As Object, e As EventArgs) Handles btnChat.Click
@@ -27,6 +36,7 @@ Public Class VenCliente
                 MsgBox("Seleccione un usuario correcto", MsgBoxStyle.Critical, "Error Chat")
             Else
                 Dim chat As Chat = New Chat
+                ventanas.Add(chat)
                 chat.User(New User(yo.User), New User(seleccionado), WinSockCliente)
                 chat.Show()
             End If
@@ -73,7 +83,7 @@ Public Class VenCliente
     Private Sub eliminarItems(ByVal [text] As String)
         If Me.lstClients.InvokeRequired Then
             Dim d As New SetTextCallback(AddressOf eliminarItems)
-            Me.Invoke(d, New Object() {[Text]})
+            Me.Invoke(d, New Object() {[text]})
         Else
             Me.lstClients.Items.Clear()
         End If
@@ -90,10 +100,12 @@ Public Class VenCliente
         'End Try
     End Sub
 
-    Private Sub VenCliente_Exit(sender As Object, e As EventArgs) Handles MyBase.FormClosed
+    Private Sub VenCliente_Exit(sender As Object, e As EventArgs) Handles MyBase.FormClosing
         Try
             'funcion.cambioEstado(yo, 0)
+            Me.Fin()
             WinSockCliente.Desconectar()
+            Me.log.Close()
         Catch ex As Exception
             MsgBox("Error al Cerrar Form: " & ex.Message)
         End Try

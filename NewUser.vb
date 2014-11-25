@@ -13,7 +13,7 @@
 
             If True Then 'funcion.nuevoCliente(dts) = True Then
                 Dim Principal As New VenCliente
-                Principal.Inicio(New User(txtUsuario.Text), WinSockCliente)
+                Principal.Inicio(New User(txtUsuario.Text), WinSockCliente, New Login)
                 Principal.Show()
                 Me.Close()
             Else

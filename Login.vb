@@ -2,6 +2,7 @@
 Imports System.Data.Sql
 
 Public Class Login
+    Private ventanas As ArrayList = New ArrayList()
     Dim WithEvents WinSockCliente As New Cliente
     'Private texto As String
     Delegate Sub SetTextCallback(ByVal [text1] As String)
@@ -18,7 +19,7 @@ Public Class Login
             Me.Invoke(d, New Object() {[text1]})
         Else
             Dim Principal As New VenCliente
-            Principal.Inicio(New User(txtUsuario.Text), WinSockCliente)
+            Principal.Inicio(New User(txtUsuario.Text), WinSockCliente, Me)
             Principal.Show()
             Me.Hide()
         End If
@@ -51,7 +52,11 @@ Public Class Login
         If WinSockCliente.IPDelHost <> txtIP.Text Or WinSockCliente.PuertoDelHost <> txtPuerto.Text Then
             If WinSockCliente.Estado Then
                 WinSockCliente.Desconectar()
+            Else
+                WinSockCliente = New Cliente
             End If
+            Conectar()
+        ElseIf Not WinSockCliente.Estado Then
             Conectar()
         End If
         Try
@@ -88,13 +93,18 @@ Public Class Login
     End Function
 
     Private Sub Conectar()
-        With WinSockCliente
-            'Determino a donde se quiere conectar el usuario 
-            .IPDelHost = txtIP.Text
-            .PuertoDelHost = txtPuerto.Text
-            'Me conecto 
-            .Conectar()
-        End With
+        Try
+            With WinSockCliente
+                'Determino a donde se quiere conectar el usuario 
+                .IPDelHost = txtIP.Text
+                .PuertoDelHost = txtPuerto.Text
+                'Me conecto 
+                .Conectar()
+            End With
+        Catch e As Exception
+            MsgBox("Servidor no encontrado! " & vbCrLf & e.Message)
+            WinSockCliente.Desconectar()
+        End Try
     End Sub
 
     Private Sub btnDesplegar_Click(sender As Object, e As EventArgs) Handles btnDesplegar.Click

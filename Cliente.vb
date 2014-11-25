@@ -8,6 +8,7 @@ Imports System.Data.SqlClient
 
 Public Class Cliente
 #Region "VARIABLES"
+    Private conectado As Boolean = False
     Private funciones As New Funciones
     Private Stm As Stream 'Utilizado para enviar datos al Servidor y recibir datos del mismo 
     Private m_IPDelHost As String 'Direccion del objeto de la clase Servidor 
@@ -61,8 +62,9 @@ Public Class Cliente
         tcpClnt = New TcpClient()
         'Me conecto al objeto de la clase Servidor, 
         '  determinado por las propiedades IPDelHost y PuertoDelHost
-        tcpClnt.Connect(IPDelHost, 8050)
+        tcpClnt.Connect(IPDelHost, PuertoDelHost)
         Stm = tcpClnt.GetStream()
+        conectado = True
 
         'Creo e inicio un thread para que escuche los mensajes enviados por el Servidor 
         tcpThd = New Thread(AddressOf LeerSocket)
@@ -70,11 +72,12 @@ Public Class Cliente
     End Sub
 
     Public Sub Desconectar()
+        conectado = False
         tcpClnt.Close()
     End Sub
 
     Public Function Estado() As Boolean
-        Return tcpClnt.Connected
+        Return conectado
     End Function
 
     Public Sub EnviarDatos(ByVal Datos As String)
