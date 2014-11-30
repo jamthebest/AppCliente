@@ -22,13 +22,14 @@ Partial Class NewUser
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(NewUser))
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.txtUsuario = New System.Windows.Forms.TextBox()
         Me.txtPassword = New System.Windows.Forms.TextBox()
         Me.cmdAceptar = New System.Windows.Forms.Button()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.cmdSalir = New System.Windows.Forms.Button()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -67,12 +68,21 @@ Partial Class NewUser
         '
         'cmdAceptar
         '
-        Me.cmdAceptar.Location = New System.Drawing.Point(30, 225)
+        Me.cmdAceptar.Image = Global.Proyecto.My.Resources.Resources.aceptar
+        Me.cmdAceptar.Location = New System.Drawing.Point(32, 220)
         Me.cmdAceptar.Name = "cmdAceptar"
-        Me.cmdAceptar.Size = New System.Drawing.Size(75, 23)
+        Me.cmdAceptar.Size = New System.Drawing.Size(60, 60)
         Me.cmdAceptar.TabIndex = 2
-        Me.cmdAceptar.Text = "Aceptar"
         Me.cmdAceptar.UseVisualStyleBackColor = True
+        '
+        'cmdSalir
+        '
+        Me.cmdSalir.Image = Global.Proyecto.My.Resources.Resources.Apagar
+        Me.cmdSalir.Location = New System.Drawing.Point(121, 220)
+        Me.cmdSalir.Name = "cmdSalir"
+        Me.cmdSalir.Size = New System.Drawing.Size(60, 60)
+        Me.cmdSalir.TabIndex = 3
+        Me.cmdSalir.UseVisualStyleBackColor = True
         '
         'PictureBox1
         '
@@ -84,21 +94,12 @@ Partial Class NewUser
         Me.PictureBox1.TabIndex = 5
         Me.PictureBox1.TabStop = False
         '
-        'cmdSalir
-        '
-        Me.cmdSalir.Location = New System.Drawing.Point(119, 225)
-        Me.cmdSalir.Name = "cmdSalir"
-        Me.cmdSalir.Size = New System.Drawing.Size(75, 23)
-        Me.cmdSalir.TabIndex = 3
-        Me.cmdSalir.Text = "Salir"
-        Me.cmdSalir.UseVisualStyleBackColor = True
-        '
         'NewUser
         '
         Me.AcceptButton = Me.cmdAceptar
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(219, 260)
+        Me.ClientSize = New System.Drawing.Size(219, 294)
         Me.Controls.Add(Me.cmdSalir)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.cmdAceptar)
@@ -106,6 +107,7 @@ Partial Class NewUser
         Me.Controls.Add(Me.txtUsuario)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "NewUser"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

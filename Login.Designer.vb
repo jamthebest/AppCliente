@@ -22,43 +22,32 @@ Partial Class Login
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim cmdIngresar As System.Windows.Forms.Button
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Login))
         Me.txtUsuario = New System.Windows.Forms.TextBox()
         Me.txtPassword = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.cmdNew = New System.Windows.Forms.Button()
         Me.txtIP = New System.Windows.Forms.TextBox()
         Me.txtPuerto = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.btnDesplegar = New System.Windows.Forms.Button()
-        cmdIngresar = New System.Windows.Forms.Button()
+        Me.cmdIngresar = New System.Windows.Forms.Button()
+        Me.cmdNew = New System.Windows.Forms.Button()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'cmdIngresar
-        '
-        cmdIngresar.Location = New System.Drawing.Point(29, 257)
-        cmdIngresar.Name = "cmdIngresar"
-        cmdIngresar.Size = New System.Drawing.Size(93, 23)
-        cmdIngresar.TabIndex = 4
-        cmdIngresar.Text = "Ingresar"
-        cmdIngresar.UseVisualStyleBackColor = True
-        AddHandler cmdIngresar.Click, AddressOf Me.cmdIngresar_Click
-        '
         'txtUsuario
         '
-        Me.txtUsuario.Location = New System.Drawing.Point(74, 174)
+        Me.txtUsuario.Location = New System.Drawing.Point(74, 159)
         Me.txtUsuario.Name = "txtUsuario"
         Me.txtUsuario.Size = New System.Drawing.Size(171, 20)
         Me.txtUsuario.TabIndex = 0
         '
         'txtPassword
         '
-        Me.txtPassword.Location = New System.Drawing.Point(74, 214)
+        Me.txtPassword.Location = New System.Drawing.Point(74, 190)
         Me.txtPassword.Name = "txtPassword"
         Me.txtPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.txtPassword.Size = New System.Drawing.Size(171, 20)
@@ -69,7 +58,7 @@ Partial Class Login
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.Black
-        Me.Label1.Location = New System.Drawing.Point(26, 177)
+        Me.Label1.Location = New System.Drawing.Point(26, 162)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(49, 13)
         Me.Label1.TabIndex = 2
@@ -79,29 +68,11 @@ Partial Class Login
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(8, 217)
+        Me.Label2.Location = New System.Drawing.Point(8, 193)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(67, 13)
         Me.Label2.TabIndex = 3
         Me.Label2.Text = "Contraseña :"
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(74, 17)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(128, 128)
-        Me.PictureBox1.TabIndex = 5
-        Me.PictureBox1.TabStop = False
-        '
-        'cmdNew
-        '
-        Me.cmdNew.Location = New System.Drawing.Point(149, 257)
-        Me.cmdNew.Name = "cmdNew"
-        Me.cmdNew.Size = New System.Drawing.Size(96, 23)
-        Me.cmdNew.TabIndex = 6
-        Me.cmdNew.Text = "Nuevo Usuario"
-        Me.cmdNew.UseVisualStyleBackColor = True
         '
         'txtIP
         '
@@ -137,20 +108,48 @@ Partial Class Login
         '
         'btnDesplegar
         '
-        Me.btnDesplegar.Location = New System.Drawing.Point(251, 258)
+        Me.btnDesplegar.Location = New System.Drawing.Point(246, 245)
         Me.btnDesplegar.Name = "btnDesplegar"
         Me.btnDesplegar.Size = New System.Drawing.Size(20, 21)
-        Me.btnDesplegar.TabIndex = 11
+        Me.btnDesplegar.TabIndex = 4
         Me.btnDesplegar.Text = "+"
         Me.btnDesplegar.TextAlign = System.Drawing.ContentAlignment.TopLeft
         Me.btnDesplegar.UseVisualStyleBackColor = True
         '
+        'cmdIngresar
+        '
+        Me.cmdIngresar.Image = Global.Proyecto.My.Resources.Resources.aceptar
+        Me.cmdIngresar.Location = New System.Drawing.Point(56, 225)
+        Me.cmdIngresar.Name = "cmdIngresar"
+        Me.cmdIngresar.Size = New System.Drawing.Size(60, 60)
+        Me.cmdIngresar.TabIndex = 2
+        Me.cmdIngresar.UseVisualStyleBackColor = True
+        '
+        'cmdNew
+        '
+        Me.cmdNew.Image = Global.Proyecto.My.Resources.Resources.Add
+        Me.cmdNew.Location = New System.Drawing.Point(151, 225)
+        Me.cmdNew.Name = "cmdNew"
+        Me.cmdNew.Size = New System.Drawing.Size(60, 60)
+        Me.cmdNew.TabIndex = 3
+        Me.cmdNew.UseVisualStyleBackColor = True
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
+        Me.PictureBox1.Location = New System.Drawing.Point(75, 13)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(128, 128)
+        Me.PictureBox1.TabIndex = 5
+        Me.PictureBox1.TabStop = False
+        '
         'Login
         '
-        Me.AcceptButton = cmdIngresar
+        Me.AcceptButton = Me.cmdIngresar
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(278, 294)
+        Me.ClientSize = New System.Drawing.Size(278, 293)
+        Me.Controls.Add(Me.cmdIngresar)
         Me.Controls.Add(Me.btnDesplegar)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
@@ -158,7 +157,6 @@ Partial Class Login
         Me.Controls.Add(Me.txtIP)
         Me.Controls.Add(Me.cmdNew)
         Me.Controls.Add(Me.PictureBox1)
-        Me.Controls.Add(cmdIngresar)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.txtPassword)
@@ -185,5 +183,6 @@ Partial Class Login
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents btnDesplegar As System.Windows.Forms.Button
+    Friend WithEvents cmdIngresar As System.Windows.Forms.Button
 
 End Class

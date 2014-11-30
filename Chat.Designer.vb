@@ -23,39 +23,31 @@ Partial Class Chat
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Chat))
         Me.txtMensaje = New System.Windows.Forms.TextBox()
-        Me.btnEnviar = New System.Windows.Forms.Button()
         Me.ShapeContainer1 = New Microsoft.VisualBasic.PowerPacks.ShapeContainer()
         Me.LineShape2 = New Microsoft.VisualBasic.PowerPacks.LineShape()
         Me.LineShape1 = New Microsoft.VisualBasic.PowerPacks.LineShape()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.cmdGrabar = New System.Windows.Forms.Button()
-        Me.cmdDetener = New System.Windows.Forms.Button()
-        Me.cmdReproducir = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
         Me.txtHistorial = New System.Windows.Forms.ListBox()
+        Me.btnEnviar = New System.Windows.Forms.Button()
+        Me.cmdReproducir = New System.Windows.Forms.Button()
+        Me.cmdDetener = New System.Windows.Forms.Button()
+        Me.cmdGrabar = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'txtMensaje
         '
-        Me.txtMensaje.Location = New System.Drawing.Point(13, 408)
+        Me.txtMensaje.Location = New System.Drawing.Point(13, 389)
         Me.txtMensaje.Multiline = True
         Me.txtMensaje.Name = "txtMensaje"
         Me.txtMensaje.Size = New System.Drawing.Size(262, 43)
         Me.txtMensaje.TabIndex = 0
-        '
-        'btnEnviar
-        '
-        Me.btnEnviar.Location = New System.Drawing.Point(107, 460)
-        Me.btnEnviar.Name = "btnEnviar"
-        Me.btnEnviar.Size = New System.Drawing.Size(75, 23)
-        Me.btnEnviar.TabIndex = 1
-        Me.btnEnviar.Text = "Enviar"
-        Me.btnEnviar.UseVisualStyleBackColor = True
         '
         'ShapeContainer1
         '
@@ -63,7 +55,7 @@ Partial Class Chat
         Me.ShapeContainer1.Margin = New System.Windows.Forms.Padding(0)
         Me.ShapeContainer1.Name = "ShapeContainer1"
         Me.ShapeContainer1.Shapes.AddRange(New Microsoft.VisualBasic.PowerPacks.Shape() {Me.LineShape2, Me.LineShape1})
-        Me.ShapeContainer1.Size = New System.Drawing.Size(287, 489)
+        Me.ShapeContainer1.Size = New System.Drawing.Size(287, 500)
         Me.ShapeContainer1.TabIndex = 3
         Me.ShapeContainer1.TabStop = False
         '
@@ -84,8 +76,8 @@ Partial Class Chat
         Me.LineShape1.Name = "LineShape1"
         Me.LineShape1.X1 = 10
         Me.LineShape1.X2 = 273
-        Me.LineShape1.Y1 = 398
-        Me.LineShape1.Y2 = 398
+        Me.LineShape1.Y1 = 379
+        Me.LineShape1.Y2 = 379
         '
         'Label4
         '
@@ -98,39 +90,10 @@ Partial Class Chat
         Me.Label4.TabIndex = 4
         Me.Label4.Text = "Chat con: "
         '
-        'cmdGrabar
-        '
-        Me.cmdGrabar.Location = New System.Drawing.Point(35, 282)
-        Me.cmdGrabar.Name = "cmdGrabar"
-        Me.cmdGrabar.Size = New System.Drawing.Size(75, 32)
-        Me.cmdGrabar.TabIndex = 5
-        Me.cmdGrabar.Text = "Grabar"
-        Me.cmdGrabar.UseVisualStyleBackColor = True
-        '
-        'cmdDetener
-        '
-        Me.cmdDetener.Enabled = False
-        Me.cmdDetener.Location = New System.Drawing.Point(170, 282)
-        Me.cmdDetener.Name = "cmdDetener"
-        Me.cmdDetener.Size = New System.Drawing.Size(75, 32)
-        Me.cmdDetener.TabIndex = 6
-        Me.cmdDetener.Text = "Detener"
-        Me.cmdDetener.UseVisualStyleBackColor = True
-        '
-        'cmdReproducir
-        '
-        Me.cmdReproducir.Enabled = False
-        Me.cmdReproducir.Location = New System.Drawing.Point(101, 330)
-        Me.cmdReproducir.Name = "cmdReproducir"
-        Me.cmdReproducir.Size = New System.Drawing.Size(75, 32)
-        Me.cmdReproducir.TabIndex = 7
-        Me.cmdReproducir.Text = "Reproducir"
-        Me.cmdReproducir.UseVisualStyleBackColor = True
-        '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(35, 373)
+        Me.Label1.Location = New System.Drawing.Point(35, 354)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(52, 13)
         Me.Label1.TabIndex = 8
@@ -139,7 +102,7 @@ Partial Class Chat
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(215, 373)
+        Me.Label2.Location = New System.Drawing.Point(215, 354)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(0, 13)
         Me.Label2.TabIndex = 9
@@ -151,7 +114,7 @@ Partial Class Chat
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(129, 373)
+        Me.Label3.Location = New System.Drawing.Point(129, 354)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(0, 13)
         Me.Label3.TabIndex = 10
@@ -168,13 +131,51 @@ Partial Class Chat
         Me.txtHistorial.Size = New System.Drawing.Size(250, 199)
         Me.txtHistorial.TabIndex = 11
         '
+        'btnEnviar
+        '
+        Me.btnEnviar.Image = Global.Proyecto.My.Resources.Resources.send
+        Me.btnEnviar.Location = New System.Drawing.Point(116, 439)
+        Me.btnEnviar.Name = "btnEnviar"
+        Me.btnEnviar.Size = New System.Drawing.Size(55, 55)
+        Me.btnEnviar.TabIndex = 1
+        Me.btnEnviar.UseVisualStyleBackColor = True
+        '
+        'cmdReproducir
+        '
+        Me.cmdReproducir.Enabled = False
+        Me.cmdReproducir.Image = Global.Proyecto.My.Resources.Resources.button_play_red
+        Me.cmdReproducir.Location = New System.Drawing.Point(212, 282)
+        Me.cmdReproducir.Name = "cmdReproducir"
+        Me.cmdReproducir.Size = New System.Drawing.Size(55, 55)
+        Me.cmdReproducir.TabIndex = 7
+        Me.cmdReproducir.UseVisualStyleBackColor = True
+        '
+        'cmdDetener
+        '
+        Me.cmdDetener.Enabled = False
+        Me.cmdDetener.Image = Global.Proyecto.My.Resources.Resources.button_stop_red
+        Me.cmdDetener.Location = New System.Drawing.Point(117, 282)
+        Me.cmdDetener.Name = "cmdDetener"
+        Me.cmdDetener.Size = New System.Drawing.Size(55, 55)
+        Me.cmdDetener.TabIndex = 6
+        Me.cmdDetener.UseVisualStyleBackColor = True
+        '
+        'cmdGrabar
+        '
+        Me.cmdGrabar.Image = Global.Proyecto.My.Resources.Resources.media_record
+        Me.cmdGrabar.Location = New System.Drawing.Point(17, 282)
+        Me.cmdGrabar.Name = "cmdGrabar"
+        Me.cmdGrabar.Size = New System.Drawing.Size(55, 55)
+        Me.cmdGrabar.TabIndex = 5
+        Me.cmdGrabar.UseVisualStyleBackColor = True
+        '
         'Chat
         '
         Me.AcceptButton = Me.btnEnviar
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoScroll = True
-        Me.ClientSize = New System.Drawing.Size(287, 489)
+        Me.ClientSize = New System.Drawing.Size(287, 500)
         Me.Controls.Add(Me.txtHistorial)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
@@ -186,6 +187,7 @@ Partial Class Chat
         Me.Controls.Add(Me.btnEnviar)
         Me.Controls.Add(Me.txtMensaje)
         Me.Controls.Add(Me.ShapeContainer1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "Chat"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

@@ -86,8 +86,13 @@ Public Class Funciones
     End Function
 
     Public Function xmlToFile(ByVal xml As String, ByVal ruta As String) As String
-        My.Computer.FileSystem.WriteAllText(ruta + ".xml", xml, False)
-        Return ruta + ".xml"
+        Try
+            My.Computer.FileSystem.WriteAllText(ruta + ".xml", xml, False)
+            Return ruta + ".xml"
+        Catch ex As Exception
+            MsgBox("Error al crear archivo XML!" & vbCrLf & ex.Message)
+        End Try
+        Return Nothing
     End Function
 
     Public Function FileToString(ByVal ruta As String) As String
@@ -111,8 +116,69 @@ Public Class Funciones
         End SyncLock
     End Function
 
-    Public Function FileToByteArray(ByVal _FileName As String) As String
-        Return Convert.ToBase64String(System.IO.File.ReadAllBytes(_FileName))
+    Public Function FileToByteArray(ByVal _FileName As String) As Byte()
+        Dim _Buffer() As Byte = Nothing
+        Try
+            ' Open file for reading
+            Dim _FileStream As New System.IO.FileStream(_FileName, System.IO.FileMode.Open, System.IO.FileAccess.Read)
+            ' attach filestream to binary reader
+            Dim _BinaryReader As New System.IO.BinaryReader(_FileStream)
+            ' get total byte length of the file
+            Dim _TotalBytes As Long = New System.IO.FileInfo(_FileName).Length
+            ' read entire file into buffer
+            _Buffer = _BinaryReader.ReadBytes(CInt(Fix(_TotalBytes)))
+            ' close file reader
+            _FileStream.Close()
+            _FileStream.Dispose()
+            _BinaryReader.Close()
+        Catch _Exception As Exception
+            ' Error
+            MsgBox("Error al Obtener Bytes: " & _Exception.Message)
+        End Try
+        Return _Buffer
+        'Return Convert.FromBase64String(System.IO.File.ReadAllBytes(_FileName))
+    End Function
+
+    Public Function BytesToFile(ByVal bytDataArray As Byte(), ByVal nombre As String, ByVal numero As Integer) As Boolean
+        Try
+            If (IO.File.Exists(nombre & numero & ".mp3")) Then
+                IO.File.Delete(nombre & numero & ".mp3")
+            End If
+            Dim length As Integer = bytDataArray.Length
+            Dim tempFileName As String = nombre & numero & ".mp3"
+            Using fs As New IO.FileStream(tempFileName, IO.FileMode.OpenOrCreate)
+                Dim bw As New IO.BinaryWriter(fs)
+                bw.Write(bytDataArray, 0, length)
+                bw.Flush()
+                bw = Nothing
+            End Using
+
+            'IO.File.WriteAllBytes(nombre & numero & ".mp3", bytDataArray)
+            'My.Computer.FileSystem.WriteAllText(nombre & numero & ".mp3", bytDataArray.ToString, False)
+            Return True
+        Catch ex As Exception
+            MsgBox("Error al crear archivo de audio!" & vbCrLf & ex.Message)
+        End Try
+        Return False
+    End Function
+
+    Public Function BytesToFile2(ByVal bytDataArray As Byte(), ByVal nombre As String, ByVal numero As Integer) As System.IO.FileStream
+        SyncLock Me
+            Dim fsDataArray As New System.IO.FileStream(nombre & numero & ".mp3", System.IO.FileMode.Create)
+            Try
+                With fsDataArray
+                    '.Write(Convert.FromBase64String(bytDataArray), 0, bytDataArray.Length)
+                    .Write(bytDataArray, 0, bytDataArray.Length)
+                End With
+            Catch ex As Exception
+                MsgBox("Error al convertir Bytes en Audio: " & ex.ToString)
+            Finally
+                With fsDataArray
+                    .Close() : .Dispose()
+                End With
+            End Try
+            Return fsDataArray
+        End SyncLock
     End Function
 
     Public Function FileToByteArray2(ByVal _FileName As String) As Byte()
@@ -144,24 +210,6 @@ Public Class Funciones
                 MsgBox("Error al abrir audio: " & ex.ToString)
             End Try
             Return _Buffer
-        End SyncLock
-    End Function
-
-    Public Function BytesToFile(ByVal bytDataArray As String, ByVal nombre As String, ByVal numero As Integer) As System.IO.FileStream
-        SyncLock Me
-            Dim fsDataArray As New System.IO.FileStream(nombre & numero & ".mp3", System.IO.FileMode.Create)
-            Try
-                With fsDataArray
-                    .Write(Convert.FromBase64String(bytDataArray), 0, bytDataArray.Length)
-                End With
-            Catch ex As Exception
-                MsgBox("Error al convertir Bytes en Audio: " & ex.ToString)
-            Finally
-                With fsDataArray
-                    .Close() : .Dispose()
-                End With
-            End Try
-            Return fsDataArray
         End SyncLock
     End Function
 
@@ -205,10 +253,11 @@ Public Class Funciones
                 tDes.IV = IVector
 
                 ITransform = tDes.CreateEncryptor()
+                Return Convert.ToBase64String(ITransform.TransformFinalBlock(byteData, 0, byteData.Length))
             Catch ex As Exception
                 MsgBox("Error al encriptar en 3DES: " & ex.ToString)
             End Try
-            Return Convert.ToBase64String(ITransform.TransformFinalBlock(byteData, 0, byteData.Length))
+            Return Nothing
         End SyncLock
     End Function
 
@@ -228,28 +277,37 @@ Public Class Funciones
                 tDes.IV = IVector
 
                 ITransform = tDes.CreateDecryptor()
+                Return Encoding.ASCII.GetString(ITransform.TransformFinalBlock(encData, 0, encData.Length()))
             Catch ex As Exception
                 MsgBox("Error al desencriptar: " & ex.ToString)
             End Try
-            Return Encoding.ASCII.GetString(ITransform.TransformFinalBlock(encData, 0, encData.Length()))
+            Return Nothing
         End SyncLock
     End Function
 
     Public Sub obtenerClientes(ByVal Usuario As User, ByVal Socket As Cliente)
-        Dim user As ArrayList = New ArrayList()
-        user.Add(Usuario.User)
-        solicitud = New Solicitud(3, user)
-        Dim encriptado As String = Encriptar(solicitud, "Solicitud")
-        Socket.EnviarDatos(encriptado)
+        Try
+            Dim user As ArrayList = New ArrayList()
+            user.Add(Usuario.User)
+            solicitud = New Solicitud(3, user)
+            Dim encriptado As String = Encriptar(solicitud, "Solicitud")
+            Socket.EnviarDatos(encriptado)
+        Catch ex As Exception
+            MsgBox("Error al enviar solicitud para obtener los usuarios!" & vbCrLf & ex.Message)
+        End Try
     End Sub
 
     Public Sub Validar(ByVal Data As Datos, ByVal Socket As Cliente)
-        Dim datos As New ArrayList()
-        datos.Add(Data.nomusuario)
-        datos.Add(Data.passusuario)
-        solicitud = New Solicitud(1, datos)
-        Dim encriptado As String = Encriptar(solicitud, "Solicitud")
-        Socket.EnviarDatos(encriptado)
+        Try
+            Dim datos As New ArrayList()
+            datos.Add(Data.nomusuario)
+            datos.Add(Data.passusuario)
+            solicitud = New Solicitud(1, datos)
+            Dim encriptado As String = Encriptar(solicitud, "Solicitud")
+            Socket.EnviarDatos(encriptado)
+        Catch ex As Exception
+            MsgBox("Error al enviar solicitud de login!" & vbCrLf & ex.Message)
+        End Try
     End Sub
 
     Public Sub nuevoCliente(ByVal Data As Datos, ByVal Socket As Cliente)
@@ -261,19 +319,38 @@ Public Class Funciones
     End Sub
 
     Public Sub ObtenerMensajes(ByVal usuario As User, ByVal para As User, ByVal Socket As Cliente)
-        Dim parametros As ArrayList = New ArrayList()
-        With parametros
-            .Add(usuario.User)
-            .Add(para.User)
-        End With
-        solicitud = New Solicitud(4, parametros)
-        Dim encriptado As String = Encriptar(solicitud, "Solicitud")
-        Socket.EnviarDatos(encriptado)
+        Try
+            Dim parametros As ArrayList = New ArrayList()
+            With parametros
+                .Add(usuario.User)
+                .Add(para.User)
+            End With
+            solicitud = New Solicitud(4, parametros)
+            Dim encriptado As String = Encriptar(solicitud, "Solicitud")
+            Socket.EnviarDatos(encriptado)
+        Catch ex As Exception
+            MsgBox("Error al recibir historial de mensajes!" & vbCrLf & ex.Message)
+        End Try
     End Sub
 
     Public Function Encriptar(ByVal objeto As Solicitud, ByVal ruta As String) As String
-        Dim txtXML As String = Serializar(objeto, ruta) 'funcion que convierte el mensaje a XML
-        Dim md As String = MD5Encrypt(txtXML) 'Se encripta el XML en MD5
-        Return encryptString(txtXML & "?XXXJAMXXX?" & md) 'Se encripta el MD5 con el XML en 3DES
+        Try
+            Dim txtXML As String = Serializar(objeto, ruta) 'funcion que convierte el mensaje a XML
+            Dim md As String = MD5Encrypt(txtXML) 'Se encripta el XML en MD5
+            Return encryptString(txtXML & "?XXXJAMXXX?" & md) 'Se encripta el MD5 con el XML en 3DES
+        Catch ex As Exception
+            MsgBox("Error al encriptar solicitud!" & vbCrLf & ex.Message)
+        End Try
     End Function
+
+    Public Sub Bitacora(ByVal descripcion As String) ', ByVal user As String)
+        SyncLock Me
+            Try
+                Dim user As String = "log"
+                My.Computer.FileSystem.WriteAllText(User & ".txt", descripcion & "  " & DateTime.Now.ToString("dd-MM-yyyy hh:mm:ss") & vbCrLf, True)
+            Catch ex As Exception
+                MsgBox("Error al escribir en la bitácora: " & ex.Message)
+            End Try
+        End SyncLock
+    End Sub
 End Class

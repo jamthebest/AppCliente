@@ -1,5 +1,6 @@
 ﻿Public Class NewUser
     Dim WithEvents WinSockCliente As New Cliente
+    Private tool As ToolTip = New ToolTip()
 
     Private Sub cmdAceptar_Click(sender As Object, e As EventArgs) Handles cmdAceptar.Click
         Dim funcion As New Funciones
@@ -37,5 +38,10 @@
 
     Private Sub NewUser_Exit(sender As Object, e As EventArgs) Handles MyBase.FormClosing
         WinSockCliente.Desconectar()
+    End Sub
+
+    Private Sub NewUser_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        tool.SetToolTip(Me.cmdAceptar, "Aceptar")
+        tool.SetToolTip(Me.cmdSalir, "Salir")
     End Sub
 End Class

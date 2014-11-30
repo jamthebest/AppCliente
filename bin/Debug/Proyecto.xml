@@ -19,6 +19,54 @@ Proyecto
 	<summary>
   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
 </summary>
+</member><member name="P:Proyecto.My.Resources.Resources.aceptar">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Proyecto.My.Resources.Resources.Add">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Proyecto.My.Resources.Resources.Apagar">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Proyecto.My.Resources.Resources.Apagar1">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Proyecto.My.Resources.Resources.button_pause_red">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Proyecto.My.Resources.Resources.button_play_red">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Proyecto.My.Resources.Resources.button_stop_red">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Proyecto.My.Resources.Resources.chat">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Proyecto.My.Resources.Resources.log">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Proyecto.My.Resources.Resources.media_record">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Proyecto.My.Resources.Resources.refresh">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
+</member><member name="P:Proyecto.My.Resources.Resources.send">
+	<summary>
+  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+</summary>
 </member><member name="T:Proyecto.My.Resources.Resources">
 	<summary>
   Clase de recurso fuertemente tipado, para buscar cadenas traducidas, etc.

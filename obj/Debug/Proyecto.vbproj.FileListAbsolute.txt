@@ -2,6 +2,7 @@ C:\Users\JAM$\Downloads\Unitec\Seguridad Computacional\Proyecto\Proyecto\bin\Deb
 C:\Users\JAM$\Downloads\Unitec\Seguridad Computacional\Proyecto\Proyecto\bin\Debug\Proyecto.exe
 C:\Users\JAM$\Downloads\Unitec\Seguridad Computacional\Proyecto\Proyecto\bin\Debug\Proyecto.pdb
 C:\Users\JAM$\Downloads\Unitec\Seguridad Computacional\Proyecto\Proyecto\bin\Debug\Proyecto.xml
+C:\Users\JAM$\Downloads\Unitec\Seguridad Computacional\Proyecto\Proyecto\obj\Debug\Proyecto.Bitacora.resources
 C:\Users\JAM$\Downloads\Unitec\Seguridad Computacional\Proyecto\Proyecto\obj\Debug\Proyecto.Chat.resources
 C:\Users\JAM$\Downloads\Unitec\Seguridad Computacional\Proyecto\Proyecto\obj\Debug\Proyecto.Login.resources
 C:\Users\JAM$\Downloads\Unitec\Seguridad Computacional\Proyecto\Proyecto\obj\Debug\Proyecto.Resources.resources

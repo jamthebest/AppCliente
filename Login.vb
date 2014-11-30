@@ -2,8 +2,10 @@
 Imports System.Data.Sql
 
 Public Class Login
+    Private tool As ToolTip = New ToolTip()
     Private ventanas As ArrayList = New ArrayList()
-    Dim WithEvents WinSockCliente As New Cliente
+    Dim func As New Funciones
+    Dim WithEvents WinSockCliente As New Cliente()
     'Private texto As String
     Delegate Sub SetTextCallback(ByVal [text1] As String)
     Private demo1 As Threading.Thread = Nothing
@@ -48,34 +50,11 @@ Public Class Login
         Me.Hide()
     End Sub
 
-    Private Sub cmdIngresar_Click(sender As Object, e As EventArgs)
-        If WinSockCliente.IPDelHost <> txtIP.Text Or WinSockCliente.PuertoDelHost <> txtPuerto.Text Then
-            If WinSockCliente.Estado Then
-                WinSockCliente.Desconectar()
-            Else
-                WinSockCliente = New Cliente
-            End If
-            Conectar()
-        ElseIf Not WinSockCliente.Estado Then
-            Conectar()
-        End If
-        Try
-            Dim dts As New Datos
-            Dim func As New Funciones
-
-            dts.nomusuario = txtUsuario.Text
-            dts.passusuario = func.MD5Encrypt(txtPassword.Text)
-
-            func.Validar(dts, WinSockCliente)
-
-        Catch ex As Exception
-            MsgBox("Error en el Login: " & ex.Message)
-        End Try
-    End Sub
-
     Private Sub Login_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         txtIP.Text = Me.GetIPAddress()
         txtPuerto.Text = "8050"
+        tool.SetToolTip(Me.cmdNew, "Nuevo Usuario")
+        tool.SetToolTip(Me.cmdIngresar, "Ingresar")
         Conectar()
     End Sub
 
@@ -119,12 +98,39 @@ Public Class Login
 
     Private Sub RespuestaLogin(ByVal mensaje As String) Handles WinSockCliente.RespuestaLogin
         If mensaje.Equals("Exito al hacer login") Then
+            func.Bitacora("Éxito al hacer login de " & txtUsuario.Text)
             Me.demo = New Threading.Thread(New Threading.ThreadStart(AddressOf Me.ThreadProcSafe))
             Me.demo.Start()
         Else
+            func.Bitacora("Error al hacer login de " & txtUsuario.Text)
             MsgBox("Error en el Usuario y/o Contraseña", MsgBoxStyle.Critical)
             Me.demo1 = New Threading.Thread(New Threading.ThreadStart(AddressOf Me.ThreadProcSafe1))
             Me.demo1.Start()
         End If
+    End Sub
+
+    Private Sub cmdIngresar_Click(sender As Object, e As EventArgs) Handles cmdIngresar.Click
+        If WinSockCliente.IPDelHost <> txtIP.Text Or WinSockCliente.PuertoDelHost <> txtPuerto.Text Then
+            If WinSockCliente.Estado Then
+                WinSockCliente.Desconectar()
+            Else
+                WinSockCliente = New Cliente
+            End If
+            Conectar()
+        ElseIf Not WinSockCliente.Estado Then
+            Conectar()
+        End If
+        Try
+            Dim dts As New Datos
+
+            dts.nomusuario = txtUsuario.Text
+            dts.passusuario = func.MD5Encrypt(txtPassword.Text)
+
+            func.Bitacora("Intento de Logueo de " & txtUsuario.Text)
+            func.Validar(dts, WinSockCliente)
+
+        Catch ex As Exception
+            MsgBox("Error en el Login: " & ex.Message)
+        End Try
     End Sub
 End Class

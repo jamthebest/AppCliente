@@ -19,7 +19,7 @@ Public Class Cliente
 
 #Region "EVENTOS"
     Public Event ConexionTerminada()
-    Public Event DatosRecibidos(ByVal datos As String)
+    Public Event DatosRecibidos(ByVal datos As String, ByVal sonido As Byte())
     Public Event RespuestaLogin(ByVal respuesta As String)
     Public Event RespuestaMensaje(ByVal respuesta As String)
     Public Event RespuestaUsers(ByVal respuesta As ArrayList)
@@ -139,12 +139,12 @@ Public Class Cliente
                             mens = mensaje.Text
                             If mens.Equals("") Then
                                 mens = "%% Audio.mp3 %%"
-                            ElseIf Not mensaje.Sound = Nothing Then
+                            ElseIf Not IsNothing(mensaje.Sound) Then
                                 mens &= "  %% Audio.mp3 %%"
                             End If
                             mens &= "   _" & DateTime.Now.ToString("dd/MM/yyyy  hh:mm:ss")
                             
-                            RaiseEvent DatosRecibidos(mens)
+                            RaiseEvent DatosRecibidos(mens, mensaje.Sound)
                         Catch e As Exception
                             MsgBox("Error al Recibir Mensaje: " & e.Message)
                         End Try

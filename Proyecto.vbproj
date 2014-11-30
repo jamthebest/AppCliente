@@ -45,6 +45,9 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>dialog-20.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
@@ -71,6 +74,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bitacora.Designer.vb">
+      <DependentUpon>Bitacora.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Bitacora.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Chat.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -119,6 +128,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Bitacora.resx">
+      <DependentUpon>Bitacora.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Chat.resx">
       <DependentUpon>Chat.vb</DependentUpon>
     </EmbeddedResource>
@@ -153,6 +165,41 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\1410246791_Customer_Male_Light.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\aceptar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Apagar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\media-record.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button_stop_red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button_play_red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\send.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\chat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Apagar1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dialog-20.ico" />
+    <None Include="Resources\log.png" />
+    <None Include="Resources\button_pause_red.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
