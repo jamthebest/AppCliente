@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Mensaje xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Text>Hola</Text>
+  <MessageTo>
+    <User>user1</User>
+  </MessageTo>
+  <MessageFrom>
+    <User>user2</User>
+  </MessageFrom>
+</Mensaje>

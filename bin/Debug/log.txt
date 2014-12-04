@@ -1,43 +1,26 @@
-﻿Intento de Logueo de jam  29-11-2014 02:18:57
-Éxito al hacer login de jam  29-11-2014 02:18:57
-El Usuario jam cerró sesión  29-11-2014 02:19:42
-Intento de Logueo de jam  29-11-2014 02:21:25
-Éxito al hacer login de jam  29-11-2014 02:21:26
-El Usuario jam actualizó el listado de usuarios  29-11-2014 02:21:35
-El Usuario jam abrió chat con jam2  29-11-2014 02:21:41
-El Usuario jam comenzó a grabar audio  29-11-2014 02:21:49
-El Usuario jam terminó de grabar audio  29-11-2014 02:21:53
-El Usuario jam envió un mensaje de audio y texto a jam2  29-11-2014 02:22:06
-El Usuario jam envió un mensaje de texto a jam2  29-11-2014 02:22:19
-El Usuario jam cerró chat con jam2  29-11-2014 02:22:26
-El Usuario jam cerró sesión  29-11-2014 02:22:30
-Intento de Logueo de jam  29-11-2014 02:28:35
-Éxito al hacer login de jam  29-11-2014 02:28:36
-El Usuario jam cerró sesión  29-11-2014 02:28:38
-El Usuario jam cerró sesión  29-11-2014 02:28:38
-Intento de Logueo de jam  29-11-2014 02:29:07
-Éxito al hacer login de jam  29-11-2014 02:29:07
-El Usuario jam cerró sesión  29-11-2014 02:29:11
-El Usuario jam cerró sesión  29-11-2014 02:29:11
-Intento de Logueo de jam  29-11-2014 02:29:41
-Éxito al hacer login de jam  29-11-2014 02:29:42
-El Usuario jam cerró sesión  29-11-2014 02:29:48
-Intento de Logueo de jam  29-11-2014 02:31:05
-Éxito al hacer login de jam  29-11-2014 02:31:05
-El Usuario jam cerró sesión  29-11-2014 02:31:37
-Intento de Logueo de jam  29-11-2014 02:33:08
-Éxito al hacer login de jam  29-11-2014 02:33:09
-El Usuario jam cerró sesión  29-11-2014 02:33:31
-Intento de Logueo de jam  29-11-2014 03:12:32
-Éxito al hacer login de jam  29-11-2014 03:12:33
-Intento de Logueo de jam  29-11-2014 03:14:02
-Éxito al hacer login de jam  29-11-2014 03:14:03
-El Usuario jam cerró sesión  29-11-2014 03:14:36
-Intento de Logueo de jam2  30-11-2014 02:35:20
-Éxito al hacer login de jam2  30-11-2014 02:35:21
-Intento de Logueo de user1  30-11-2014 02:36:20
-Error al hacer login de user1  30-11-2014 02:36:21
-Intento de Logueo de user1  30-11-2014 02:36:32
-Éxito al hacer login de user1  30-11-2014 02:36:32
-El Usuario user1 actualizó el listado de usuarios  30-11-2014 02:37:18
-El Usuario user1 cerró sesión  30-11-2014 02:37:26
+﻿Intento de Logueo de user1  02-12-2014 07:02:05
+Éxito al hacer login de user1  02-12-2014 07:02:08
+Intento de Logueo de user2  02-12-2014 07:02:16
+Error al hacer login de user2  02-12-2014 07:02:17
+Intento de Logueo de user2  02-12-2014 07:02:23
+Éxito al hacer login de user2  02-12-2014 07:02:24
+El Usuario user1 abrió chat con user2  02-12-2014 07:02:41
+El Usuario user2 abrió chat con user1  02-12-2014 07:02:44
+El Usuario user2 envió un mensaje de texto a user1  02-12-2014 07:02:48
+El Usuario user1 envió un mensaje de texto a user2  02-12-2014 07:02:54
+El Usuario user1 comenzó a grabar audio  02-12-2014 07:03:07
+El Usuario user1 terminó de grabar audio  02-12-2014 07:03:09
+El Usuario user1 reprodujo audio  02-12-2014 07:03:12
+El Usuario user1 reprodujo audio  02-12-2014 07:03:15
+El Usuario user1 reprodujo audio  02-12-2014 07:03:18
+El Usuario user1 reprodujo audio  02-12-2014 07:03:20
+El Usuario user1 envió un mensaje de audio a user2  02-12-2014 07:03:33
+El Usuario user2 reprodujo audio  02-12-2014 07:03:38
+El Usuario user2 reprodujo audio  02-12-2014 07:03:40
+El Usuario user2 reprodujo audio  02-12-2014 07:05:10
+El Usuario user2 cerró chat con user1  02-12-2014 07:05:21
+El Usuario user1 cerró chat con user2  02-12-2014 07:05:23
+El Usuario user2 actualizó el listado de usuarios  02-12-2014 07:05:52
+El Usuario user2 actualizó el listado de usuarios  02-12-2014 07:05:58
+El Usuario user1 actualizó el listado de usuarios  02-12-2014 07:06:03
+El Usuario user2 cerró sesión  02-12-2014 07:07:29

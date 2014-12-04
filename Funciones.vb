@@ -125,12 +125,17 @@ Public Class Funciones
             Dim _BinaryReader As New System.IO.BinaryReader(_FileStream)
             ' get total byte length of the file
             Dim _TotalBytes As Long = New System.IO.FileInfo(_FileName).Length
-            ' read entire file into buffer
-            _Buffer = _BinaryReader.ReadBytes(CInt(Fix(_TotalBytes)))
-            ' close file reader
-            _FileStream.Close()
-            _FileStream.Dispose()
-            _BinaryReader.Close()
+            Try
+                ' read entire file into buffer
+                _Buffer = _BinaryReader.ReadBytes(CInt(Fix(_TotalBytes)))
+            Catch ex As Exception
+                MsgBox("Error al leer archivo!" & vbCrLf & ex.Message)
+            Finally
+                ' close file reader
+                _FileStream.Close()
+                _FileStream.Dispose()
+                _BinaryReader.Close()
+            End Try
         Catch _Exception As Exception
             ' Error
             MsgBox("Error al Obtener Bytes: " & _Exception.Message)
@@ -341,15 +346,24 @@ Public Class Funciones
         Catch ex As Exception
             MsgBox("Error al encriptar solicitud!" & vbCrLf & ex.Message)
         End Try
+        Return ""
     End Function
 
     Public Sub Bitacora(ByVal descripcion As String) ', ByVal user As String)
         SyncLock Me
+            'Dim fileWriter As StreamWriter = Nothing
             Try
                 Dim user As String = "log"
-                My.Computer.FileSystem.WriteAllText(User & ".txt", descripcion & "  " & DateTime.Now.ToString("dd-MM-yyyy hh:mm:ss") & vbCrLf, True)
+                '   fileWriter = New StreamWriter(user & ".txt")
+                '  fileWriter = My.Computer.FileSystem.OpenTextFileWriter(user & ".txt", True)
+                ' fileWriter.WriteLine(descripcion)
+                My.Computer.FileSystem.WriteAllText(user & ".txt", descripcion & "  " & DateTime.Now.ToString("dd-MM-yyyy hh:mm:ss") & vbCrLf, True)
             Catch ex As Exception
                 MsgBox("Error al escribir en la bitácora: " & ex.Message)
+            Finally
+                'If Not IsNothing(fileWriter) Then
+                'fileWriter.Close()
+                'End If
             End Try
         End SyncLock
     End Sub
