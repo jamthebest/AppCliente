@@ -26,6 +26,7 @@ Partial Class VenCliente
         Me.cmdSalir = New System.Windows.Forms.Button()
         Me.btnChat = New System.Windows.Forms.Button()
         Me.btnBitacora = New System.Windows.Forms.Button()
+        Me.filter = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'lstClients
@@ -50,7 +51,7 @@ Partial Class VenCliente
         'cmdRefresh
         '
         Me.cmdRefresh.Image = Global.Proyecto.My.Resources.Resources.refresh
-        Me.cmdRefresh.Location = New System.Drawing.Point(77, 259)
+        Me.cmdRefresh.Location = New System.Drawing.Point(77, 299)
         Me.cmdRefresh.Name = "cmdRefresh"
         Me.cmdRefresh.Size = New System.Drawing.Size(55, 55)
         Me.cmdRefresh.TabIndex = 12
@@ -59,7 +60,7 @@ Partial Class VenCliente
         'cmdSalir
         '
         Me.cmdSalir.Image = Global.Proyecto.My.Resources.Resources.Apagar1
-        Me.cmdSalir.Location = New System.Drawing.Point(199, 259)
+        Me.cmdSalir.Location = New System.Drawing.Point(199, 299)
         Me.cmdSalir.Name = "cmdSalir"
         Me.cmdSalir.Size = New System.Drawing.Size(55, 55)
         Me.cmdSalir.TabIndex = 11
@@ -68,7 +69,7 @@ Partial Class VenCliente
         'btnChat
         '
         Me.btnChat.Image = Global.Proyecto.My.Resources.Resources.chat
-        Me.btnChat.Location = New System.Drawing.Point(16, 259)
+        Me.btnChat.Location = New System.Drawing.Point(16, 299)
         Me.btnChat.Name = "btnChat"
         Me.btnChat.Size = New System.Drawing.Size(55, 55)
         Me.btnChat.TabIndex = 10
@@ -77,17 +78,25 @@ Partial Class VenCliente
         'btnBitacora
         '
         Me.btnBitacora.Image = Global.Proyecto.My.Resources.Resources.log
-        Me.btnBitacora.Location = New System.Drawing.Point(138, 259)
+        Me.btnBitacora.Location = New System.Drawing.Point(138, 299)
         Me.btnBitacora.Name = "btnBitacora"
         Me.btnBitacora.Size = New System.Drawing.Size(55, 55)
         Me.btnBitacora.TabIndex = 13
         Me.btnBitacora.UseVisualStyleBackColor = True
         '
+        'filter
+        '
+        Me.filter.Location = New System.Drawing.Point(56, 264)
+        Me.filter.Name = "filter"
+        Me.filter.Size = New System.Drawing.Size(157, 20)
+        Me.filter.TabIndex = 14
+        '
         'VenCliente
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(274, 328)
+        Me.ClientSize = New System.Drawing.Size(274, 372)
+        Me.Controls.Add(Me.filter)
         Me.Controls.Add(Me.btnBitacora)
         Me.Controls.Add(Me.cmdRefresh)
         Me.Controls.Add(Me.cmdSalir)
@@ -110,5 +119,6 @@ Partial Class VenCliente
     Friend WithEvents cmdSalir As System.Windows.Forms.Button
     Friend WithEvents cmdRefresh As System.Windows.Forms.Button
     Friend WithEvents btnBitacora As System.Windows.Forms.Button
+    Friend WithEvents filter As System.Windows.Forms.TextBox
 
 End Class

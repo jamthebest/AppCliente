@@ -12,6 +12,8 @@ Public Class VenCliente
     Private funcion As New Funciones
     Private hilo As Thread
     Private clientes As ArrayList = New ArrayList
+    Private usuarios As ArrayList = New ArrayList
+    Private temp As ArrayList = New ArrayList
     Private texto As String
     Private demo As Threading.Thread = Nothing
     Dim WithEvents WinSockCliente As New Cliente
@@ -88,6 +90,7 @@ Public Class VenCliente
             Me.Invoke(d, New Object() {[text]})
         Else
             Me.lstClients.Items.Clear()
+            Me.usuarios.Clear()
         End If
     End Sub
 
@@ -143,6 +146,7 @@ Public Class VenCliente
             Me.Invoke(d, New Object() {[text1]})
         Else
             Me.lstClients.Items.Add(text1)
+            Me.usuarios.Add(text1)
         End If
     End Sub
 
@@ -168,5 +172,14 @@ Public Class VenCliente
         Dim bitacora As New Bitacora()
         bitacora.Show()
         bitacora.Inicio(yo.User)
+    End Sub
+
+    Private Sub filter_TextChanged(sender As Object, e As EventArgs) Handles filter.TextChanged
+        lstClients.Items.Clear()
+        For Each usuario As String In usuarios
+            If usuario.Contains(filter.Text) Or usuario.Equals("Conectados") Or usuario.Equals("Desconectados") Then
+                lstClients.Items.Add(usuario)
+            End If
+        Next
     End Sub
 End Class
