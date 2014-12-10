@@ -15,9 +15,10 @@ Public Class Chat
     Dim IP1 As String
     Dim port1 As String
     Dim Texto As String
-    Dim contador As Integer = 0 'Lleva el indice del audio
+    Dim contador As Integer = 1 'Lleva el indice del audio
     Dim grabado As Boolean = False 'Bandera para reproducir archivo grabado u obtenido
     Private reprod As Boolean = True
+    Private delete As Boolean = False
     Delegate Sub SetTextCallback(ByVal [text1] As String)
 
     'Esta función se utiliza para grabar audio
@@ -35,7 +36,9 @@ Public Class Chat
             Dim d As New SetTextCallback(AddressOf SetText)
             Me.Invoke(d, New Object() {[text1]})
         Else
-            Me.txtHistorial.Items.Insert(0, dest.User + ": " & text1 & vbCrLf)
+            Call Me.verificarFecha()
+            Dim hora As String = text1.Substring(text1.Length - 8) & ")"
+            Me.txtHistorial.Items.Insert(1, dest.User + ": " & text1.Substring(0, text1.Length - 21) & "(" & hora)
         End If
     End Sub
 
@@ -43,7 +46,7 @@ Public Class Chat
         'txtMensaje.Text = txtMensaje.Text + datos
         Texto = datos
         If Not IsNothing(sonido) Then
-            funciones.BytesToFile(sonido, yo.User, contador)
+            funciones.BytesToFile(sonido, yo.User & dest.User, contador)
         End If
         contador += 1
         Me.demo = New Threading.Thread(New Threading.ThreadStart(AddressOf Me.ThreadProcSafe))
@@ -60,8 +63,23 @@ Public Class Chat
             Dim d As New SetTextCallback(AddressOf SetText2)
             Me.Invoke(d, New Object() {[text1]})
         Else
-            Me.txtHistorial.Items.Insert(0, text1 & vbCrLf)
-            'Me.txtHistorial.Items.Add(text1 & vbCrLf)
+            Me.txtHistorial.Items.Insert(1, text1)
+        End If
+    End Sub
+
+    Private Sub SetText2_fecha(ByVal [text1] As String)
+        ' InvokeRequired required compares the thread ID of the
+        ' calling thread to the thread ID of the creating thread.
+        ' If these threads are different, it returns true.
+        If Me.txtMensaje.InvokeRequired Then
+            Dim d As New SetTextCallback(AddressOf SetText2_fecha)
+            Me.Invoke(d, New Object() {[text1]})
+        Else
+            If delete Then
+                Me.txtHistorial.Items.RemoveAt(0)
+                contador -= 1
+            End If
+            Me.txtHistorial.Items.Insert(0, text1)
         End If
     End Sub
 
@@ -81,15 +99,15 @@ Public Class Chat
         Else
             Dim mensaje As Mensaje 'Se crea la variable para el mensaje nuevo
             If texto.Equals("") Then 'Se envía un mensaje de audio
-                funciones.Bitacora("El Usuario " & yo.User & " envió un mensaje de audio a " & dest.User)
-                Dim audio As Byte() = funciones.FileToByteArray(yo.User & contador & ".mp3") 'Se convierte el audio a un arreglo de bytes
+                funciones.Bitacora("El Usuario " & yo.User & " envió un mensaje de audio a " & dest.User, yo.user)
+                Dim audio As Byte() = funciones.FileToByteArray(yo.User & dest.User & "_" & contador & ".mp3") 'Se convierte el audio a un arreglo de bytes
                 mensaje = New Mensaje("", audio, dest, yo) 'Se crea el mensaje de Solo de sonido
             ElseIf Label2.Text.Equals("") Then 'Se envía un mensaje de texto
-                funciones.Bitacora("El Usuario " & yo.User & " envió un mensaje de texto a " & dest.User)
+                funciones.Bitacora("El Usuario " & yo.User & " envió un mensaje de texto a " & dest.User, yo.user)
                 mensaje = New Mensaje(texto, dest, yo) 'Se crea el mensaje de Solo de texto
             Else 'Se envia un mensaje de Audio y Texto
-                funciones.Bitacora("El Usuario " & yo.User & " envió un mensaje de audio y texto a " & dest.User)
-                Dim audio As Byte() = funciones.FileToByteArray(yo.User & contador & ".mp3") 'Se convierte el audio
+                funciones.Bitacora("El Usuario " & yo.User & " envió un mensaje de audio y texto a " & dest.User, yo.user)
+                Dim audio As Byte() = funciones.FileToByteArray(yo.User & dest.User & "_" & contador & ".mp3") 'Se convierte el audio
                 mensaje = New Mensaje(texto, audio, dest, yo) 'Se crea el mensaje de De texto y audio
             End If
             contador += 1
@@ -102,8 +120,9 @@ Public Class Chat
             ElseIf Not Label2.Text.Equals("") Then
                 texto &= "  %% Audio.mp3 %%"
             End If
-            texto &= "   _" & DateTime.Now.ToString("dd-MM-yyyy  hh:mm:ss")
-            txtHistorial.Items.Insert(0, "Yo: " + texto + vbCrLf + vbCrLf) 'Se escribe el mensaje en el historial
+            texto &= "   (" & DateTime.Now.ToString("hh:mm:ss") & ")"
+            Call Me.verificarFecha()
+            txtHistorial.Items.Insert(1, "Yo: " + texto) 'Se escribe el mensaje en el historial
 
             Dim solicitud As Solicitud = New Solicitud(2, tDes)
             Dim encriptado As String = funciones.Encriptar(solicitud, "Solicitud")
@@ -115,6 +134,18 @@ Public Class Chat
         txtMensaje.Text = ""
     End Sub
 
+    Private Sub verificarFecha()
+        Try
+            'MsgBox(txtHistorial.Items.Count)
+            If Not Me.txtHistorial.Items(0).ToString.Equals(DateTime.Now.ToString("dd-MM-yyyy")) Then
+                txtHistorial.Items.Insert(0, DateTime.Now.ToString("dd-MM-yyyy"))
+                contador += 1
+            End If
+        Catch ex As Exception
+            MsgBox("Error al verificar Fecha: " & ex.Message)
+        End Try
+    End Sub
+
     'Se inicializan los usuarios
     Public Function User(ByVal usuario As User, ByVal destinatario As User, ByVal Socket As Cliente) As Boolean
         yo = usuario
@@ -122,7 +153,6 @@ Public Class Chat
         Label4.Text &= dest.User
         Me.Text &= " de: " + yo.User
         WinSockCliente = Socket
-        contador = 0
         Return True
     End Function
 
@@ -130,7 +160,7 @@ Public Class Chat
         If txtHistorial.SelectedIndex >= 0 Then
             txtHistorial.SetSelected(txtHistorial.SelectedIndex, False)
         End If
-        funciones.Bitacora("El Usuario " & yo.User & " comenzó a grabar audio")
+        funciones.Bitacora("El Usuario " & yo.User & " comenzó a grabar audio", yo.user)
         Call BotonesGrabando()
         grabado = True
         Label2.Text = "00:00"
@@ -155,11 +185,11 @@ Public Class Chat
 
     Private Sub label2_temp(sender As Object, e As EventArgs) Handles Label2.TextChanged
         If Label2.Text = "00:10" Then
-            funciones.Bitacora("El Usuario " & yo.User & " terminó de grabar audio")
+            funciones.Bitacora("El Usuario " & yo.User & " terminó de grabar audio", yo.user)
             Call TimerOff()
             Call BotonesDetenido()
 
-            Dim comando As String = "save recsound " & yo.User & contador & ".mp3"
+            Dim comando As String = "save recsound " & yo.User & dest.User & "_" & contador & ".mp3"
             mciSendString(comando, "", 0, 0) 'Guarda el audio grabado en un archivo
             mciSendString("close recsound", "", 0, 0) 'Cierra la instancia que graba el audio
 
@@ -172,11 +202,11 @@ Public Class Chat
     End Sub
 
     Private Sub cmdDetener_Click(sender As Object, e As EventArgs) Handles cmdDetener.Click
-        funciones.Bitacora("El Usuario " & yo.User & " terminó de grabar audio")
+        funciones.Bitacora("El Usuario " & yo.User & " terminó de grabar audio", yo.user)
         Call BotonesDetenido()
         Call TimerOff()
 
-        Dim comando As String = "save recsound " & yo.User & contador & ".mp3"
+        Dim comando As String = "save recsound " & yo.User & dest.User & "_" & contador & ".mp3"
         mciSendString(comando, "", 0, 0) 'Guarda el audio grabado en un archivo
         mciSendString("close recsound", "", 0, 0) 'Cierra la instancia que graba el audio
         'MsgBox("Audio Grabado", MsgBoxStyle.Information, "Mensaje") 'Emite un mensaje que indica que se grabó el audio
@@ -186,7 +216,7 @@ Public Class Chat
 
     Private Sub Reproducir(ByVal numero As Integer, ByVal tipo As Integer)
         Try
-            If (IO.File.Exists(yo.User & numero & ".mp3")) Then
+            If (IO.File.Exists(yo.User & dest.User & "_" & numero & ".mp3")) Then
                 If tipo = 1 Then
                     cmdGrabar.Enabled = False
                     Label1.Text = "Reproduciendo..."
@@ -194,11 +224,11 @@ Public Class Chat
                     cmdReproducir.Image = Proyecto.My.Resources.button_pause_red
                     Label3.Text = "00:00"
                     Timer2.Enabled = True
-                    My.Computer.Audio.Play(yo.User & numero & ".mp3", AudioPlayMode.Background) 'Reproduce el audio grabado
+                    My.Computer.Audio.Play(yo.User & dest.User & "_" & numero & ".mp3", AudioPlayMode.Background) 'Reproduce el audio grabado
                 Else
                     reprod = False
                     'cmdReproducir.Image = Proyecto.My.Resources.button_pause_red
-                    My.Computer.Audio.Play(yo.User & numero & ".mp3", AudioPlayMode.WaitToComplete) 'Reproduce el audio grabado
+                    My.Computer.Audio.Play(yo.User & dest.User & "_" & numero & ".mp3", AudioPlayMode.WaitToComplete) 'Reproduce el audio grabado
                     'cmdReproducir.Image = Proyecto.My.Resources.button_play_red
                     reprod = True
                 End If
@@ -213,14 +243,14 @@ Public Class Chat
 
     Private Sub cmdReproducir_Click(sender As Object, e As EventArgs) Handles cmdReproducir.Click
         If reprod Then
-            funciones.Bitacora("El Usuario " & yo.User & " reprodujo audio")
+            funciones.Bitacora("El Usuario " & yo.User & " reprodujo audio", yo.user)
             If grabado Then
                 Call Reproducir(contador, 1)
             Else
-                Call Reproducir(txtHistorial.Items.Count - 1 - txtHistorial.SelectedIndex, 0)
+                Call Reproducir(txtHistorial.Items.Count - txtHistorial.SelectedIndex, 0)
             End If
         Else
-            funciones.Bitacora("El Usuario " & yo.User & " detuvo la reproducción")
+            funciones.Bitacora("El Usuario " & yo.User & " detuvo la reproducción", yo.user)
             Call DetenerReproduccion()
             Call Resetear()
         End If
@@ -323,7 +353,7 @@ Public Class Chat
 
     Private Sub txtHistorial_SelectedIndexChanged(sender As Object, e As EventArgs) Handles txtHistorial.SelectedIndexChanged
         'MsgBox(txtHistorial.SelectedIndex)
-        If (IO.File.Exists(yo.User & txtHistorial.Items.Count - 1 - txtHistorial.SelectedIndex & ".mp3")) Then
+        If (IO.File.Exists(yo.User & dest.User & "_" & txtHistorial.Items.Count - txtHistorial.SelectedIndex & ".mp3")) Then
             Call BotonesDetenido()
         Else
             Call BotonesGrabar()
@@ -338,15 +368,16 @@ Public Class Chat
     End Sub
 
     Private Sub Chat_FormClosing(sender As Object, e As EventArgs) Handles MyBase.FormClosing
-        funciones.Bitacora("El Usuario " & yo.User & " cerró chat con " & dest.User)
+        funciones.Bitacora("El Usuario " & yo.User & " cerró chat con " & dest.User, yo.user)
         For i = 0 To contador
-            If (IO.File.Exists(yo.User & i & ".mp3")) Then
-                IO.File.Delete(yo.User & i & ".mp3")
+            If (IO.File.Exists(yo.User & dest.User & "_" & i & ".mp3")) Then
+                IO.File.Delete(yo.User & dest.User & "_" & i & ".mp3")
             End If
         Next
     End Sub
 
     Private Sub Chat_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.txtHistorial.Items.Add(DateTime.Now.ToString("dd-MM-yyyy"))
         funciones.ObtenerMensajes(yo, dest, WinSockCliente)
         tool.SetToolTip(Me.cmdDetener, "Detener")
         tool.SetToolTip(Me.cmdGrabar, "Grabar")
@@ -357,6 +388,7 @@ Public Class Chat
     Public Sub RespuestaObtener(ByVal respuesta As ArrayList) Handles WinSockCliente.RespuestaObtener
         SyncLock Me
             Dim origen As String
+            contador = 1
             For i = 0 To (respuesta.Count / 4) - 1
                 'If Not item.GetString(0).Equals(yo.User) And Not item.GetString(0).Equals(dest.User) Then
                 'Exit For
@@ -370,11 +402,24 @@ Public Class Chat
                 My.Computer.FileSystem.WriteAllText(yo.User & ".xml", respuesta((i * 4) + 2).ToString, False)
                 message = funciones.DesSerializar(yo.User & ".xml")
                 'message = funciones.DesSerializar(funciones.FileToString(yo.User & ".xml"))
+                'Dim fecha As String = DateTime.Now.ToString("dd-MM-yyyy")
+                'MsgBox((respuesta((i * 4) + 3).ToString).Substring(0, 10))
+                If Not Me.txtHistorial.Items(0).ToString.Equals((respuesta((i * 4) + 3).ToString).Substring(0, 10)) Then
+                    'MsgBox("Si")
+                    If Me.txtHistorial.Items.Count = 1 Then
+                        delete = True
+                        Me.SetText2_fecha((respuesta((i * 4) + 3).ToString).Substring(0, 10))
+                    Else
+                        delete = False
+                        Me.SetText2_fecha((respuesta((i * 4) + 3).ToString).Substring(0, 10))
+                    End If
+                    contador += 1
+                End If
                 If Not IsNothing(message.Sound) Then
-                    funciones.BytesToFile(message.Sound, yo.User, contador) 'System.Text.Encoding.Default.GetBytes(message.Sound), yo.User, contador)
-                    Me.SetText2(origen & ": " & message.Text & " %% Audio.mp3 %%" & "   _" & respuesta((i * 4) + 3).ToString)
+                    funciones.BytesToFile(message.Sound, yo.User & dest.User, i + 1) 'System.Text.Encoding.Default.GetBytes(message.Sound), yo.User, contador)
+                    Me.SetText2(origen & ": " & message.Text & " %% Audio.mp3 %%" & "   (" & (respuesta((i * 4) + 3).ToString).Substring(12) & ")")
                 Else
-                    Me.SetText2(origen & ": " & message.Text & "   _" & respuesta((i * 4) + 3).ToString)
+                    Me.SetText2(origen & ": " & message.Text & "   (" & (respuesta((i * 4) + 3).ToString).Substring(12) & ")")
                 End If
                 If (IO.File.Exists(yo.User & ".xml")) Then
                     IO.File.Delete(yo.User & ".xml")

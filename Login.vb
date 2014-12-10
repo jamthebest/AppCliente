@@ -98,11 +98,11 @@ Public Class Login
 
     Private Sub RespuestaLogin(ByVal mensaje As String) Handles WinSockCliente.RespuestaLogin
         If mensaje.Equals("Exito al hacer login") Then
-            func.Bitacora("Éxito al hacer login de " & txtUsuario.Text)
+            func.Bitacora("Éxito al hacer login de " & txtUsuario.Text, txtUsuario.Text)
             Me.demo = New Threading.Thread(New Threading.ThreadStart(AddressOf Me.ThreadProcSafe))
             Me.demo.Start()
         Else
-            func.Bitacora("Error al hacer login de " & txtUsuario.Text)
+            func.Bitacora("Error al hacer login de " & txtUsuario.Text, txtUsuario.Text)
             MsgBox("Error en el Usuario y/o Contraseña", MsgBoxStyle.Critical)
             Me.demo1 = New Threading.Thread(New Threading.ThreadStart(AddressOf Me.ThreadProcSafe1))
             Me.demo1.Start()
@@ -110,6 +110,10 @@ Public Class Login
     End Sub
 
     Private Sub cmdIngresar_Click(sender As Object, e As EventArgs) Handles cmdIngresar.Click
+        If Me.txtUsuario.Text.Equals("") Or Me.txtPassword.Text.Equals("") Then
+            MsgBox("Ingrese su usuario y contraseña", MsgBoxStyle.Critical)
+            Exit Sub
+        End If
         If WinSockCliente.IPDelHost <> txtIP.Text Or WinSockCliente.PuertoDelHost <> txtPuerto.Text Then
             If WinSockCliente.Estado Then
                 WinSockCliente.Desconectar()
@@ -126,7 +130,7 @@ Public Class Login
             dts.nomusuario = txtUsuario.Text
             dts.passusuario = func.MD5Encrypt(txtPassword.Text)
 
-            func.Bitacora("Intento de Logueo de " & txtUsuario.Text)
+            func.Bitacora("Intento de Logueo de " & txtUsuario.Text, txtUsuario.Text)
             func.Validar(dts, WinSockCliente)
 
         Catch ex As Exception

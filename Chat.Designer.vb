@@ -46,7 +46,7 @@ Partial Class Chat
         Me.txtMensaje.Location = New System.Drawing.Point(13, 389)
         Me.txtMensaje.Multiline = True
         Me.txtMensaje.Name = "txtMensaje"
-        Me.txtMensaje.Size = New System.Drawing.Size(262, 43)
+        Me.txtMensaje.Size = New System.Drawing.Size(288, 43)
         Me.txtMensaje.TabIndex = 0
         '
         'ShapeContainer1
@@ -55,7 +55,7 @@ Partial Class Chat
         Me.ShapeContainer1.Margin = New System.Windows.Forms.Padding(0)
         Me.ShapeContainer1.Name = "ShapeContainer1"
         Me.ShapeContainer1.Shapes.AddRange(New Microsoft.VisualBasic.PowerPacks.Shape() {Me.LineShape2, Me.LineShape1})
-        Me.ShapeContainer1.Size = New System.Drawing.Size(287, 500)
+        Me.ShapeContainer1.Size = New System.Drawing.Size(313, 500)
         Me.ShapeContainer1.TabIndex = 3
         Me.ShapeContainer1.TabStop = False
         '
@@ -65,9 +65,9 @@ Partial Class Chat
         Me.LineShape2.BorderWidth = 3
         Me.LineShape2.Name = "LineShape2"
         Me.LineShape2.X1 = 9
-        Me.LineShape2.X2 = 272
+        Me.LineShape2.X2 = 304
         Me.LineShape2.Y1 = 262
-        Me.LineShape2.Y2 = 262
+        Me.LineShape2.Y2 = 263
         '
         'LineShape1
         '
@@ -75,9 +75,9 @@ Partial Class Chat
         Me.LineShape1.BorderWidth = 3
         Me.LineShape1.Name = "LineShape1"
         Me.LineShape1.X1 = 10
-        Me.LineShape1.X2 = 273
+        Me.LineShape1.X2 = 305
         Me.LineShape1.Y1 = 379
-        Me.LineShape1.Y2 = 379
+        Me.LineShape1.Y2 = 380
         '
         'Label4
         '
@@ -102,7 +102,7 @@ Partial Class Chat
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(215, 354)
+        Me.Label2.Location = New System.Drawing.Point(224, 354)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(0, 13)
         Me.Label2.TabIndex = 9
@@ -114,7 +114,7 @@ Partial Class Chat
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(129, 354)
+        Me.Label3.Location = New System.Drawing.Point(133, 354)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(0, 13)
         Me.Label3.TabIndex = 10
@@ -126,9 +126,10 @@ Partial Class Chat
         'txtHistorial
         '
         Me.txtHistorial.FormattingEnabled = True
+        Me.txtHistorial.HorizontalScrollbar = True
         Me.txtHistorial.Location = New System.Drawing.Point(17, 47)
         Me.txtHistorial.Name = "txtHistorial"
-        Me.txtHistorial.Size = New System.Drawing.Size(250, 199)
+        Me.txtHistorial.Size = New System.Drawing.Size(284, 199)
         Me.txtHistorial.TabIndex = 11
         '
         'btnEnviar
@@ -144,7 +145,7 @@ Partial Class Chat
         '
         Me.cmdReproducir.Enabled = False
         Me.cmdReproducir.Image = Global.Proyecto.My.Resources.Resources.button_play_red
-        Me.cmdReproducir.Location = New System.Drawing.Point(212, 282)
+        Me.cmdReproducir.Location = New System.Drawing.Point(221, 282)
         Me.cmdReproducir.Name = "cmdReproducir"
         Me.cmdReproducir.Size = New System.Drawing.Size(55, 55)
         Me.cmdReproducir.TabIndex = 7
@@ -154,7 +155,7 @@ Partial Class Chat
         '
         Me.cmdDetener.Enabled = False
         Me.cmdDetener.Image = Global.Proyecto.My.Resources.Resources.button_stop_red
-        Me.cmdDetener.Location = New System.Drawing.Point(117, 282)
+        Me.cmdDetener.Location = New System.Drawing.Point(122, 282)
         Me.cmdDetener.Name = "cmdDetener"
         Me.cmdDetener.Size = New System.Drawing.Size(55, 55)
         Me.cmdDetener.TabIndex = 6
@@ -163,7 +164,7 @@ Partial Class Chat
         'cmdGrabar
         '
         Me.cmdGrabar.Image = Global.Proyecto.My.Resources.Resources.media_record
-        Me.cmdGrabar.Location = New System.Drawing.Point(17, 282)
+        Me.cmdGrabar.Location = New System.Drawing.Point(22, 282)
         Me.cmdGrabar.Name = "cmdGrabar"
         Me.cmdGrabar.Size = New System.Drawing.Size(55, 55)
         Me.cmdGrabar.TabIndex = 5
@@ -174,8 +175,7 @@ Partial Class Chat
         Me.AcceptButton = Me.btnEnviar
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.AutoScroll = True
-        Me.ClientSize = New System.Drawing.Size(287, 500)
+        Me.ClientSize = New System.Drawing.Size(313, 500)
         Me.Controls.Add(Me.txtHistorial)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
@@ -187,6 +187,7 @@ Partial Class Chat
         Me.Controls.Add(Me.btnEnviar)
         Me.Controls.Add(Me.txtMensaje)
         Me.Controls.Add(Me.ShapeContainer1)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "Chat"

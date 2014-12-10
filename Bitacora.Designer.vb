@@ -22,6 +22,7 @@ Partial Class Bitacora
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Bitacora))
         Me.btnSalir = New System.Windows.Forms.Button()
         Me.lstLog = New System.Windows.Forms.ListBox()
         Me.SuspendLayout()
@@ -38,6 +39,7 @@ Partial Class Bitacora
         'lstLog
         '
         Me.lstLog.FormattingEnabled = True
+        Me.lstLog.HorizontalScrollbar = True
         Me.lstLog.Location = New System.Drawing.Point(13, 13)
         Me.lstLog.Name = "lstLog"
         Me.lstLog.Size = New System.Drawing.Size(399, 251)
@@ -51,6 +53,8 @@ Partial Class Bitacora
         Me.ClientSize = New System.Drawing.Size(424, 334)
         Me.Controls.Add(Me.lstLog)
         Me.Controls.Add(Me.btnSalir)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "Bitacora"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

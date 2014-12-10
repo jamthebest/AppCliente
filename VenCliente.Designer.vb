@@ -94,7 +94,9 @@ Partial Class VenCliente
         Me.Controls.Add(Me.btnChat)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.lstClients)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximizeBox = False
         Me.Name = "VenCliente"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Cliente"

@@ -36,7 +36,7 @@ Public Class VenCliente
             If seleccionado.Equals("Conectados") Or seleccionado.Equals("Desconectados") Then
                 MsgBox("Seleccione un usuario correcto", MsgBoxStyle.Critical, "Error Chat")
             Else
-                funcion.Bitacora("El Usuario " & yo.User & " abrió chat con " & seleccionado)
+                funcion.Bitacora("El Usuario " & yo.User & " abrió chat con " & seleccionado, yo.User)
                 Dim chat As Chat = New Chat
                 ventanas.Add(chat)
                 chat.User(New User(yo.User), New User(seleccionado), WinSockCliente)
@@ -100,7 +100,7 @@ Public Class VenCliente
 
     Private Sub VenCliente_Exit(sender As Object, e As EventArgs) Handles MyBase.FormClosing
         Try
-            funcion.Bitacora("El Usuario " & yo.User & " cerró sesión")
+            funcion.Bitacora("El Usuario " & yo.User & " cerró sesión", yo.User)
             Me.Fin()
             WinSockCliente.Desconectar()
             Me.log.Close()
@@ -147,7 +147,7 @@ Public Class VenCliente
     End Sub
 
     Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
-        funcion.Bitacora("El Usuario " & yo.User & " actualizó el listado de usuarios")
+        funcion.Bitacora("El Usuario " & yo.User & " actualizó el listado de usuarios", yo.User)
         funcion.obtenerClientes(yo, WinSockCliente)
     End Sub
 
@@ -156,7 +156,7 @@ Public Class VenCliente
         If seleccionado.Equals("Conectados") Or seleccionado.Equals("Desconectados") Then
             MsgBox("Seleccione un usuario correcto", MsgBoxStyle.Critical, "Error Chat")
         Else
-            funcion.Bitacora("El Usuario " & yo.User & " abrió chat con " & seleccionado)
+            funcion.Bitacora("El Usuario " & yo.User & " abrió chat con " & seleccionado, yo.User)
             Dim chat As Chat = New Chat
             ventanas.Add(chat)
             chat.User(New User(yo.User), New User(seleccionado), WinSockCliente)

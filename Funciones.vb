@@ -146,11 +146,11 @@ Public Class Funciones
 
     Public Function BytesToFile(ByVal bytDataArray As Byte(), ByVal nombre As String, ByVal numero As Integer) As Boolean
         Try
-            If (IO.File.Exists(nombre & numero & ".mp3")) Then
-                IO.File.Delete(nombre & numero & ".mp3")
+            If (IO.File.Exists(nombre & "_" & numero & ".mp3")) Then
+                IO.File.Delete(nombre & "_" & numero & ".mp3")
             End If
             Dim length As Integer = bytDataArray.Length
-            Dim tempFileName As String = nombre & numero & ".mp3"
+            Dim tempFileName As String = nombre & "_" & numero & ".mp3"
             Using fs As New IO.FileStream(tempFileName, IO.FileMode.OpenOrCreate)
                 Dim bw As New IO.BinaryWriter(fs)
                 bw.Write(bytDataArray, 0, length)
@@ -169,7 +169,7 @@ Public Class Funciones
 
     Public Function BytesToFile2(ByVal bytDataArray As Byte(), ByVal nombre As String, ByVal numero As Integer) As System.IO.FileStream
         SyncLock Me
-            Dim fsDataArray As New System.IO.FileStream(nombre & numero & ".mp3", System.IO.FileMode.Create)
+            Dim fsDataArray As New System.IO.FileStream(nombre & "_" & numero & ".mp3", System.IO.FileMode.Create)
             Try
                 With fsDataArray
                     '.Write(Convert.FromBase64String(bytDataArray), 0, bytDataArray.Length)
@@ -349,15 +349,17 @@ Public Class Funciones
         Return ""
     End Function
 
-    Public Sub Bitacora(ByVal descripcion As String) ', ByVal user As String)
+    Public Sub Bitacora(ByVal descripcion As String, ByVal user As String)
         SyncLock Me
             'Dim fileWriter As StreamWriter = Nothing
             Try
-                Dim user As String = "log"
+                ' Dim user As String = "log"
                 '   fileWriter = New StreamWriter(user & ".txt")
                 '  fileWriter = My.Computer.FileSystem.OpenTextFileWriter(user & ".txt", True)
                 ' fileWriter.WriteLine(descripcion)
-                My.Computer.FileSystem.WriteAllText(user & ".txt", descripcion & "  " & DateTime.Now.ToString("dd-MM-yyyy hh:mm:ss") & vbCrLf, True)
+                'descripcion &= vbCrLf & My.Computer.FileSystem.ReadAllText(user & ".txt")
+
+                My.Computer.FileSystem.WriteAllText(user & ".txt", descripcion & "  " & DateTime.Now.ToString("dd-MM-yyyy hh:mm:ss") & ",", True)
             Catch ex As Exception
                 MsgBox("Error al escribir en la bitácora: " & ex.Message)
             Finally
