@@ -8,6 +8,7 @@ Public Class VenCliente
     Private tool As ToolTip = New ToolTip()
     Private log As Login
     Private ventanas As ArrayList = New ArrayList()
+    Private chats As ArrayList = New ArrayList()
     Private yo As User
     Private funcion As New Funciones
     Private hilo As Thread
@@ -16,6 +17,8 @@ Public Class VenCliente
     Private temp As ArrayList = New ArrayList
     Private texto As String
     Private demo As Threading.Thread = Nothing
+    Private demoAbrir As Threading.Thread = Nothing
+    Private demoCerrar As Threading.Thread = Nothing
     Dim WithEvents WinSockCliente As New Cliente
     Delegate Sub SetTextCallback(ByVal [text1] As String)
 
@@ -24,6 +27,22 @@ Public Class VenCliente
         Me.Text &= ": " & usuario.User
         WinSockCliente = socket
         Me.log = login
+    End Sub
+
+    Public Sub abrirChat(ByVal user As String)
+        texto = user
+        Me.demoAbrir = New Threading.Thread(New Threading.ThreadStart(AddressOf Me.ThreadProcSafeAbrir))
+        Me.demoAbrir.Start()
+    End Sub
+
+    Public Function isOpen(ByVal user As String) As Boolean
+        Return clientes.Contains(user)
+    End Function
+
+    Public Sub cerrarVentana(ByVal ven As Chat, ByVal user As String)
+        texto = user
+        Me.demoCerrar = New Threading.Thread(New Threading.ThreadStart(AddressOf Me.ThreadProcSafeCerrar))
+        Me.demoCerrar.Start()
     End Sub
 
     Public Sub Fin()
@@ -41,7 +60,8 @@ Public Class VenCliente
                 funcion.Bitacora("El Usuario " & yo.User & " abrió chat con " & seleccionado, yo.User)
                 Dim chat As Chat = New Chat
                 ventanas.Add(chat)
-                chat.User(New User(yo.User), New User(seleccionado), WinSockCliente)
+                clientes.Add(seleccionado)
+                chat.User(New User(yo.User), New User(seleccionado), WinSockCliente, Me)
                 chat.Show()
             End If
         End If
@@ -99,6 +119,7 @@ Public Class VenCliente
         tool.SetToolTip(Me.cmdSalir, "Salir")
         tool.SetToolTip(Me.btnChat, "Iniciar Chat")
         tool.SetToolTip(Me.btnBitacora, "Ver Bitácora")
+        WinSockCliente.cliente = Me
     End Sub
 
     Private Sub VenCliente_Exit(sender As Object, e As EventArgs) Handles MyBase.FormClosing
@@ -150,6 +171,41 @@ Public Class VenCliente
         End If
     End Sub
 
+    Private Sub ThreadProcSafeAbrir()
+        Me.SetTextAbrir(texto)
+    End Sub
+
+    Private Sub SetTextAbrir(ByVal [text1] As String)
+        If Me.lstClients.InvokeRequired Then
+            Dim d As New SetTextCallback(AddressOf SetTextAbrir)
+            Me.Invoke(d, New Object() {[text1]})
+        Else
+            funcion.Bitacora("El Usuario " & text1 & " comenzó un chat con " & yo.User, yo.User)
+            Dim chat As Chat = New Chat
+            ventanas.Add(chat)
+            clientes.Add(text1)
+            chat.User(New User(yo.User), New User(text1), WinSockCliente, Me)
+            chat.Show()
+        End If
+    End Sub
+
+    Private Sub ThreadProcSafeCerrar()
+        Me.SetTextCerrar(texto)
+    End Sub
+
+    Private Sub SetTextCerrar(ByVal [text1] As String)
+        If Me.lstClients.InvokeRequired Then
+            Dim d As New SetTextCallback(AddressOf SetTextCerrar)
+            Me.Invoke(d, New Object() {[text1]})
+        Else
+            ventanas.Remove(Chat)
+            clientes.Remove(text1)
+            For Each cl As String In clientes
+                MsgBox(cl)
+            Next
+        End If
+    End Sub
+
     Private Sub cmdRefresh_Click(sender As Object, e As EventArgs) Handles cmdRefresh.Click
         funcion.Bitacora("El Usuario " & yo.User & " actualizó el listado de usuarios", yo.User)
         funcion.obtenerClientes(yo, WinSockCliente)
@@ -163,7 +219,8 @@ Public Class VenCliente
             funcion.Bitacora("El Usuario " & yo.User & " abrió chat con " & seleccionado, yo.User)
             Dim chat As Chat = New Chat
             ventanas.Add(chat)
-            chat.User(New User(yo.User), New User(seleccionado), WinSockCliente)
+            clientes.Add(seleccionado)
+            chat.User(New User(yo.User), New User(seleccionado), WinSockCliente, Me)
             chat.Show()
         End If
     End Sub

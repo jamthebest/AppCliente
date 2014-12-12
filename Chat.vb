@@ -19,6 +19,7 @@ Public Class Chat
     Dim grabado As Boolean = False 'Bandera para reproducir archivo grabado u obtenido
     Private reprod As Boolean = True
     Private delete As Boolean = False
+    Private ven As VenCliente
     Delegate Sub SetTextCallback(ByVal [text1] As String)
 
     'Esta función se utiliza para grabar audio
@@ -147,12 +148,13 @@ Public Class Chat
     End Sub
 
     'Se inicializan los usuarios
-    Public Function User(ByVal usuario As User, ByVal destinatario As User, ByVal Socket As Cliente) As Boolean
+    Public Function User(ByVal usuario As User, ByVal destinatario As User, ByVal Socket As Cliente, ByVal client As VenCliente) As Boolean
         yo = usuario
         dest = destinatario
         Label4.Text &= dest.User
         Me.Text &= " de: " + yo.User
         WinSockCliente = Socket
+        Me.ven = client
         Return True
     End Function
 
@@ -374,6 +376,7 @@ Public Class Chat
                 IO.File.Delete(yo.User & dest.User & "_" & i & ".mp3")
             End If
         Next
+        ven.cerrarVentana(Me, Me.dest.User)
     End Sub
 
     Private Sub Chat_Load(sender As Object, e As EventArgs) Handles MyBase.Load

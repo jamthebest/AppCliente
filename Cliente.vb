@@ -15,6 +15,7 @@ Public Class Cliente
     Private m_PuertoDelHost As String 'Puerto donde escucha el objeto de la clase Servidor 
     Dim tcpClnt As TcpClient
     Private Usuario As User 'Instancia del Usuario
+    Public cliente As VenCliente
 #End Region
 
 #Region "EVENTOS"
@@ -143,7 +144,10 @@ Public Class Cliente
                                 mens &= "  %% Audio.mp3 %%"
                             End If
                             mens &= "   _" & DateTime.Now.ToString("dd/MM/yyyy  hh:mm:ss")
-                            
+
+                            If Not cliente.isOpen(mensaje.MessageFrom.User) Then
+                                cliente.abrirChat(mensaje.MessageFrom.User)
+                            End If
                             RaiseEvent DatosRecibidos(mens, mensaje.Sound)
                         Catch e As Exception
                             MsgBox("Error al Recibir Mensaje: " & e.Message)
